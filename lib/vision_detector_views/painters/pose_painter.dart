@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../mlkit_api_source/google_mlkit_pose_detection/lib/google_mlkit_pose_detection.dart';
+import 'package:google_mlkit_pose_detection/google_mlkit_pose_detection.dart';
 
 import 'coordinates_translator.dart';
 
