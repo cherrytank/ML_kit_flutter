@@ -4,7 +4,6 @@ import 'package:camera/camera.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:google_mlkit_commons/google_mlkit_commons.dart';
-import 'package:image_picker/image_picker.dart';
 
 import '../main.dart';
 
@@ -35,20 +34,12 @@ class CameraView extends StatefulWidget {
 class _CameraViewState extends State<CameraView> {
   ScreenMode _mode = ScreenMode.liveFeed;
   CameraController? _controller;
-  File? _image;
-  String? _path;
-  ImagePicker? _imagePicker;
   int _cameraIndex = -1;
-  double zoomLevel = 0.0, minZoomLevel = 0.0, maxZoomLevel = 0.0;
-  final bool _allowPicker = true;
   bool _changingCameraLens = false;
 
   @override
   void initState() {
     super.initState();
-
-    _imagePicker = ImagePicker();
-
     if (cameras.any(
       (element) =>
           element.lensDirection == widget.initialDirection &&
@@ -89,7 +80,7 @@ class _CameraViewState extends State<CameraView> {
       ),
       body: _body(),
       floatingActionButton: _floatingActionButton(),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
     );
   }
 
@@ -166,13 +157,6 @@ class _CameraViewState extends State<CameraView> {
       if (!mounted) {
         return;
       }
-      _controller?.getMinZoomLevel().then((value) {
-        zoomLevel = value;
-        minZoomLevel = value;
-      });
-      _controller?.getMaxZoomLevel().then((value) {
-        maxZoomLevel = value;
-      });
       _controller?.startImageStream(_processCameraImage);
       setState(() {});
     });
@@ -191,19 +175,6 @@ class _CameraViewState extends State<CameraView> {
     await _stopLiveFeed();
     await _startLiveFeed();
     setState(() => _changingCameraLens = false);
-  }
-
-  Future _processPickedFile(XFile? pickedFile) async {
-    final path = pickedFile?.path;
-    if (path == null) {
-      return;
-    }
-    setState(() {
-      _image = File(path);
-    });
-    _path = path;
-    final inputImage = InputImage.fromFilePath(path);
-    widget.onImage(inputImage);
   }
 
   Future _processCameraImage(CameraImage image) async {

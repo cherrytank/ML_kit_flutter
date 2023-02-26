@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:google_mlkit_pose_detection/google_mlkit_pose_detection.dart';
-
 import 'coordinates_translator.dart';
 
 class PosePainter extends CustomPainter {
@@ -14,18 +13,23 @@ class PosePainter extends CustomPainter {
   void paint(Canvas canvas, Size size) {
     final paint = Paint()
       ..style = PaintingStyle.stroke
-      ..strokeWidth = 4.0
+      ..strokeWidth = 8.0
       ..color = Colors.green;
 
     final leftPaint = Paint()
       ..style = PaintingStyle.stroke
-      ..strokeWidth = 3.0
+      ..strokeWidth = 4.0
       ..color = Colors.yellow;
 
     final rightPaint = Paint()
       ..style = PaintingStyle.stroke
-      ..strokeWidth = 3.0
+      ..strokeWidth = 4.0
       ..color = Colors.blueAccent;
+
+    final headPaint = Paint()
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = 4.0
+      ..color = Colors.white30;
 
     for (final pose in poses) {
       pose.landmarks.forEach((_, landmark) {
@@ -65,7 +69,8 @@ class PosePainter extends CustomPainter {
           PoseLandmarkType.leftShoulder, PoseLandmarkType.leftHip, leftPaint);
       paintLine(PoseLandmarkType.rightShoulder, PoseLandmarkType.rightHip,
           rightPaint);
-
+      paintLine(PoseLandmarkType.rightShoulder, PoseLandmarkType.leftShoulder, headPaint);
+      paintLine(PoseLandmarkType.rightHip, PoseLandmarkType.leftHip, headPaint);
       //Draw legs
       paintLine(PoseLandmarkType.leftHip, PoseLandmarkType.leftKnee, leftPaint);
       paintLine(
@@ -74,6 +79,19 @@ class PosePainter extends CustomPainter {
           PoseLandmarkType.rightHip, PoseLandmarkType.rightKnee, rightPaint);
       paintLine(
           PoseLandmarkType.rightKnee, PoseLandmarkType.rightAnkle, rightPaint);
+      //Draw face
+      paintLine(PoseLandmarkType.leftEar, PoseLandmarkType.leftEyeOuter, headPaint);
+      paintLine(PoseLandmarkType.leftEyeOuter, PoseLandmarkType.leftEye, headPaint);
+      paintLine(PoseLandmarkType.leftEyeInner, PoseLandmarkType.nose, headPaint);
+      paintLine(PoseLandmarkType.nose, PoseLandmarkType.rightEyeInner, headPaint);
+      paintLine(PoseLandmarkType.rightEyeInner, PoseLandmarkType.rightEyeOuter, headPaint);
+      paintLine(PoseLandmarkType.rightEyeOuter, PoseLandmarkType.rightEar, headPaint);
+      paintLine(PoseLandmarkType.rightMouth, PoseLandmarkType.leftMouth, headPaint);
+
+      //return data
+      //print(pose.landmarks[PoseLandmarkType.leftShoulder]?.x);
+      var posedata=[pose.landmarks[PoseLandmarkType.leftShoulder]?.x,];
+      //print(posedata);
     }
   }
 
