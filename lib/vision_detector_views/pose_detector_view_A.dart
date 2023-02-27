@@ -31,6 +31,7 @@ class _PoseDetectorViewState extends State<PoseDetectorView_A> {
 
   @override
   Widget build(BuildContext context) {
+    print(posedata);
     return Stack(
         alignment:Alignment.center ,
         fit: StackFit.expand,
@@ -123,3 +124,5 @@ class _PoseDetectorViewState extends State<PoseDetectorView_A> {
     }
   }
 }
+
+
