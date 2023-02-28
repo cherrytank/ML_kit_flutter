@@ -22,7 +22,6 @@ class _PoseDetectorViewState extends State<PoseDetectorView_A> {
   double remindpaddingsize = 10;
   double Targetwidth = 0;
   double Targeheight = 0;
-  int poseTarget  = 10; //目標次數設定_也要設定Det的
   final periodicTimer = Timer.periodic(//觸發偵測timer
     const Duration(seconds: 3),
         (timer) {
@@ -101,7 +100,7 @@ class _PoseDetectorViewState extends State<PoseDetectorView_A> {
                 color: Colors.white,
                 borderRadius: BorderRadius.all(Radius.circular(20.0)),),
                 child:
-                Text("目前次數: ${Det.getcounter()}  目標次數:$poseTarget",textAlign: TextAlign.center,
+                Text("目前次數: ${Det.getcounter()}  目標次數:${Det.getTarget()}",textAlign: TextAlign.center,
                   style: TextStyle(fontSize: 30,color: Colors.black,height: 1.2,inherit: false,),
                 ),
               ),
@@ -137,9 +136,9 @@ class _PoseDetectorViewState extends State<PoseDetectorView_A> {
 
 class Detector{
   int posecounter = 0;//復健動作實作次數
-  int poseTarget  = 10;
+  int poseTarget  = 10;//目標次數設定
   bool startdDetector = false;//偵測
-  bool endDetector = false;
+  bool endDetector = false;//跳轉
   double? Standpoint_X=0;
   double? Standpoint_Y=0;
 
@@ -151,7 +150,9 @@ class Detector{
   int getcounter(){
     return this.posecounter;
   }
-
+  int getTarget(){
+    return this.poseTarget;
+  }
   bool getendDetector(){
     return this.endDetector;
   }
