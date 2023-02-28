@@ -1,14 +1,16 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'dart:async';
 import 'package:google_mlkit_pose_detection/google_mlkit_pose_detection.dart';
 import 'camera_view.dart';
 import 'painters/pose_painter.dart';
 
+
+//左肩復健頁面
+Detector Det = Detector();//初始化
 class PoseDetectorView_A extends StatefulWidget {
   @override
   State<StatefulWidget> createState() => _PoseDetectorViewState();
 }
-
 class _PoseDetectorViewState extends State<PoseDetectorView_A> {
   final PoseDetector _poseDetector =
       PoseDetector(options: PoseDetectorOptions());
@@ -20,18 +22,25 @@ class _PoseDetectorViewState extends State<PoseDetectorView_A> {
   double remindpaddingsize = 10;
   double Targetwidth = 0;
   double Targeheight = 0;
-  int posecounter = 0;
-  int poseTarget  = 10; //目標次數設定
+  int poseTarget  = 10; //目標次數設定_也要設定Det的
+  final periodicTimer = Timer.periodic(//觸發偵測timer
+    const Duration(seconds: 3),
+        (timer) {
+      Det.poseDetector();
+      Det.posetargetdone();
+    },
+  );
   @override
   void dispose() async {
     _canProcess = false;
     _poseDetector.close();
     super.dispose();
   }
-
   @override
   Widget build(BuildContext context) {
-    print(posedata);
+    if(Det.getendDetector()){//退回上一頁
+      Navigator.pop(context);
+    }
     return Stack(
         alignment:Alignment.center ,
         fit: StackFit.expand,
@@ -75,7 +84,8 @@ class _PoseDetectorViewState extends State<PoseDetectorView_A> {
                 remindpaddingsize=0;
                 Targetwidth = 360;
                 Targeheight = 80;
-
+                Det.startD();
+                Det.setStandpoint();
               },
             ),
           ),
@@ -91,7 +101,7 @@ class _PoseDetectorViewState extends State<PoseDetectorView_A> {
                 color: Colors.white,
                 borderRadius: BorderRadius.all(Radius.circular(20.0)),),
                 child:
-                Text("目前次數:$posecounter  目標次數:$poseTarget",textAlign: TextAlign.center,
+                Text("目前次數: ${Det.getcounter()}  目標次數:$poseTarget",textAlign: TextAlign.center,
                   style: TextStyle(fontSize: 30,color: Colors.black,height: 1.2,inherit: false,),
                 ),
               ),
@@ -124,5 +134,49 @@ class _PoseDetectorViewState extends State<PoseDetectorView_A> {
     }
   }
 }
+
+class Detector{
+  int posecounter = 0;//復健動作實作次數
+  int poseTarget  = 10;
+  bool startdDetector = false;//偵測
+  bool endDetector = false;
+  double? Standpoint_X=0;
+  double? Standpoint_Y=0;
+
+  void startD(){//開始辨識
+    this.startdDetector = true;
+    print("startdDetector be true");
+  }
+
+  int getcounter(){
+    return this.posecounter;
+  }
+
+  bool getendDetector(){
+    return this.endDetector;
+  }
+
+  void poseDetector(){//偵測判定
+    if(this.startdDetector){
+      print(posedata[23]!);
+      print(this.Standpoint_Y!);
+      if(posedata[23]! < (this.Standpoint_Y!)){
+        this.posecounter++;
+      }
+    }
+  }
+  void setStandpoint(){//設定基準點(左上角為(0,0)向右下)
+    this.Standpoint_X = posedata[22]!-100;
+    this.Standpoint_Y = posedata[23]!-100;
+  }
+  void posetargetdone(){//完成任務後復歸
+    if(this.posecounter == this.poseTarget){
+      this.posecounter = 0;
+      this.startdDetector = false;
+      this.endDetector = true;
+    }
+  }
+}
+
 
 

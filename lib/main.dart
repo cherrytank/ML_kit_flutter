@@ -8,9 +8,7 @@ List<CameraDescription> cameras = [];
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-
   cameras = await availableCameras();
-
   runApp(MyApp());
 }
 
@@ -29,61 +27,35 @@ class Home extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Google ML Kit Demo App'),
+        title: Text('Demo App'),
         centerTitle: true,
         elevation: 0,
       ),
-      body: SafeArea(
-        child: Center(
-          child: SingleChildScrollView(
+      body: Center(
             child: Padding(
               padding: EdgeInsets.symmetric(horizontal: 16),
               child:
                   ExpansionTile(
                     title: const Text('APIs'),
                     children: [
-                      CustomCard('Face Detection', FaceDetectorView()),
-                      CustomCard('Pose Detection', PoseDetectorView()),
-                      CustomCard('Pose Detection_A', PoseDetectorView_A()),
+                      ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          minimumSize: Size(350,50),
+                          padding: EdgeInsets.all(10.0),
+                          textStyle: const TextStyle(fontSize: 30)
+                        ),
+                        child: Text("Pose Detection_A"),
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            new MaterialPageRoute(builder: (context) => new PoseDetectorView_A()),
+                          );
+                        },
+                      ),
                     ],
                   ),
             ),
           ),
-        ),
-      ),
-    );
-  }
-}
-
-class CustomCard extends StatelessWidget {
-  final String _label;
-  final Widget _viewPage;
-  final bool featureCompleted;
-
-  const CustomCard(this._label, this._viewPage, {this.featureCompleted = true});
-
-  @override
-  Widget build(BuildContext context) {
-    return Card(
-      elevation: 5,
-      margin: EdgeInsets.only(bottom: 10),
-      child: ListTile(
-        tileColor: Theme.of(context).primaryColor,
-        title: Text(
-          _label,
-          style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
-        ),
-        onTap: () {
-          if (!featureCompleted) {
-            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                content:
-                    const Text('This feature has not been implemented yet')));
-          } else {
-            Navigator.push(
-                context, MaterialPageRoute(builder: (context) => _viewPage));
-          }
-        },
-      ),
     );
   }
 }
