@@ -25,8 +25,8 @@ class _PoseDetectorViewState extends State<PoseDetectorView_A> {
   final periodicTimer = Timer.periodic(//觸發偵測timer
     const Duration(seconds: 3),
         (timer) {
-      Det.poseDetector();
-      Det.posetargetdone();
+      Det.poseDetector();//偵測目標是否完成動作
+      Det.posetargetdone();//偵測目標是否完成指定次數
     },
   );
   @override
