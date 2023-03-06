@@ -5,13 +5,13 @@ import 'camera_view.dart';
 import 'painters/pose_painter.dart';
 
 
-//左肩聳肩復健頁面
-final Detector Det = Detector();//初始化
-class PoseDetectorView_A extends StatefulWidget {
+//左肩復健頁面
+Detector Det = Detector();//初始化
+class PoseDetectorView_B extends StatefulWidget {
   @override
   State<StatefulWidget> createState() => _PoseDetectorViewState();
 }
-class _PoseDetectorViewState extends State<PoseDetectorView_A> {
+class _PoseDetectorViewState extends State<PoseDetectorView_B> {
   final PoseDetector _poseDetector =
       PoseDetector(options: PoseDetectorOptions());
   bool _canProcess = true;
@@ -21,9 +21,7 @@ class _PoseDetectorViewState extends State<PoseDetectorView_A> {
   double remindtextsize = 25;
   double remindpaddingsize = 10;
   double Targetwidth = 0;
-  double Targetheight = 0;
-  double targetLine = 0;
-  double targetLineheght = 0;
+  double Targeheight = 0;
   final periodicTimer = Timer.periodic(//觸發偵測timer
     const Duration(seconds: 1),
         (timer) {
@@ -84,11 +82,9 @@ class _PoseDetectorViewState extends State<PoseDetectorView_A> {
                 remindtextsize=0;
                 remindpaddingsize=0;
                 Targetwidth = 360;
-                Targetheight = 110;
+                Targeheight = 80;
                 Det.startD();
                 Det.setStandpoint();
-                targetLine = Det.getStandpoint();
-                targetLineheght = 5;
               },
             ),
           ),
@@ -97,27 +93,17 @@ class _PoseDetectorViewState extends State<PoseDetectorView_A> {
             left: 20,
               child: Container(
                 width: Targetwidth,
-                height: Targetheight,
+                height: Targeheight,
                 padding: EdgeInsets.all(10),
                 alignment:Alignment.center,
                 decoration: new BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.all(Radius.circular(20.0)),),
                 child:
-                Text("目前次數:${Det.getcounter()} 目標次數:${Det.getTarget()} \n"
-                    "目前秒數:${Det.getposetimecounter()} 目標秒數:0${Det.getposetimeTarget()}"
-                    ,textAlign: TextAlign.center,
+                Text("目前次數: ${Det.getcounter()}  目標次數:${Det.getTarget()}",textAlign: TextAlign.center,
                   style: TextStyle(fontSize: 30,color: Colors.black,height: 1.2,inherit: false,),
                 ),
               ),
-          ),
-          Positioned(
-            top: targetLine-150,
-            child: Container(
-              color: Colors.blue,
-              width: 1000,
-              height: targetLineheght,
-            ),
           ),
         ],
       );
@@ -149,13 +135,10 @@ class _PoseDetectorViewState extends State<PoseDetectorView_A> {
 }
 
 class Detector{
-  int posetimecounter = 0; //復健動作持續秒數
-  int posetimeTarget = 5;  //復健動作持續秒數目標
   int posecounter = 0;//復健動作實作次數
   int poseTarget  = 10;//目標次數設定
   bool startdDetector = false;//偵測
   bool endDetector = false;//跳轉
-  bool DetectorED = false;
   double? Standpoint_X=0;
   double? Standpoint_Y=0;
 
@@ -173,42 +156,23 @@ class Detector{
   bool getendDetector(){
     return this.endDetector;
   }
-  int getposetimecounter(){
-    return this.posetimecounter;
-  }
-  int getposetimeTarget(){
-    return this.posetimeTarget;
-  }
-  double getStandpoint(){
-    return this.Standpoint_Y!;
-  }
+
   void poseDetector(){//偵測判定
     if(this.startdDetector){
-      DetectorED = true;
       print(posedata[23]!);
       print(this.Standpoint_Y!);
-      if(this.posetimecounter == this.posetimeTarget){//秒數達成
-        this.startdDetector = false;
+      if(posedata[23]! < (this.Standpoint_Y!)){//達到目標
         this.posecounter++;
-        this.posetimecounter = 0;
-      }
-      if(posedata[23]! < (this.Standpoint_Y!)&& this.startdDetector){//每秒目標
-        this.posetimecounter++;
-        print(this.posetimecounter);
-      }
-      else{//沒有保持
-        this.posetimecounter = 0;
+        this.startdDetector = false;
       }
     }
-    else if(DetectorED){//預防空值被訪問
-      if(posedata[23]! > (this.Standpoint_Y!)){//確認復歸
-        this.startdDetector = true;
-      }
+    else if(posedata[23]! > (this.Standpoint_Y!)){//確認復歸
+      this.startdDetector = true;
     }
   }
   void setStandpoint(){//設定基準點(左上角為(0,0)向右下)
-    this.Standpoint_X = posedata[22]!-70;
-    this.Standpoint_Y = posedata[23]!-70;
+    this.Standpoint_X = posedata[22]!-100;
+    this.Standpoint_Y = posedata[23]!-100;
   }
   void posetargetdone(){//完成任務後復歸
     if(this.posecounter == this.poseTarget){
