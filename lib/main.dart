@@ -1,7 +1,6 @@
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:google_ml_kit_example/vision_detector_views/pose_detector_view_A.dart';
-import 'package:google_ml_kit_example/vision_detector_views/pose_detector_view_B.dart';
 import 'vision_detector_views/face_detector_view.dart';
 import 'vision_detector_views/pose_detector_view.dart';
 
@@ -54,20 +53,6 @@ class Home extends StatelessWidget {
                         },
                       ),
                       SizedBox(height: 10,),
-                      ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                            minimumSize: Size(350,50),
-                            padding: EdgeInsets.all(10.0),
-                            textStyle: const TextStyle(fontSize: 30)
-                        ),
-                        child: Text("Pose Detection_B"),
-                        onPressed: () {
-                          Navigator.push(
-                            context,
-                            new MaterialPageRoute(builder: (context) => new PoseDetectorView_B()),
-                          );
-                        },
-                      ),
                     ],
                   ),
             ),

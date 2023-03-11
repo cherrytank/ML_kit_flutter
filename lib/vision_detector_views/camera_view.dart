@@ -75,9 +75,20 @@ class _CameraViewState extends State<CameraView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.title),
-      ),
+      /*appBar:
+          AppBar(
+            leading: IconButton(
+              icon: Icon(
+                Icons.arrow_back_ios_new_outlined,
+                color: Colors.black,
+              ),
+              color:Colors.black,
+              onPressed: () { Navigator.pop(context); },),
+
+            title: Text(widget.title,style: TextStyle(color: Colors.black,),),
+            backgroundColor: Color.fromARGB(255, 18, 255, 247),
+            centerTitle: true,
+          ),*/
       body: _body(),
       floatingActionButton: _floatingActionButton(),
       floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
@@ -87,16 +98,22 @@ class _CameraViewState extends State<CameraView> {
   Widget? _floatingActionButton() {
     if (_mode == ScreenMode.gallery) return null;
     if (cameras.length == 1) return null;
-    return SizedBox(
+    return Container(
+        decoration: new BoxDecoration(
+          gradient: LinearGradient(colors: [Color.fromARGB(255, 18, 255, 247), Color.fromARGB(
+              255, 0, 236, 188)]),
+          borderRadius: BorderRadius.all(Radius.circular(50.0)),),
         height: 70.0,
         width: 70.0,
         child: FloatingActionButton(
+          backgroundColor: Color(0xffffff),
           onPressed: _switchLiveCamera,
           child: Icon(
             Platform.isIOS
                 ? Icons.flip_camera_ios_outlined
                 : Icons.flip_camera_android_outlined,
             size: 40,
+            color: Colors.white,
           ),
         ));
   }
