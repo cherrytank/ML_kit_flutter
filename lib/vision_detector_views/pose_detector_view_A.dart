@@ -6,8 +6,6 @@ import 'painters/pose_painter.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 
 //左肩聳肩復健頁面
-Detector Det = new Detector(); //初始化
-
 class PoseDetectorView_A extends StatefulWidget {
   @override
   State<StatefulWidget> createState() => _PoseDetectorViewState();
@@ -20,21 +18,12 @@ class _PoseDetectorViewState extends State<PoseDetectorView_A> {
   bool _isBusy = false;
   CustomPaint? _customPaint;
   String? _text;
-  final periodicTimer = Timer.periodic(
-    //觸發偵測timer
-    const Duration(seconds: 1),
-    (timer) {
-      Det.poseDetector(); //偵測目標是否完成動作
-      Det.posetargetdone(); //偵測目標是否完成指定次數
-    },
-  );
-
+  Detector Det = Detector();//建立偵測系統
   @override
   void dispose() async {
-    Det.endD();
-    periodicTimer.cancel();
     _canProcess = false;
     _poseDetector.close();
+    Det.timerbool = false;//關閉timer
     super.dispose();
   }
 
@@ -42,6 +31,7 @@ class _PoseDetectorViewState extends State<PoseDetectorView_A> {
   Widget build(BuildContext context) {
     if (Det.getendDetector()) {
       //退回上一頁
+      print("back page");
       Navigator.pop(context);
     }
     return Stack(
@@ -58,6 +48,31 @@ class _PoseDetectorViewState extends State<PoseDetectorView_A> {
           },
         ),
         Positioned(
+          //人形立牌
+          top: 140,
+          child:Image(
+            height: Det.fakepreson,
+            image: AssetImage("assets/picture/b.png"),)
+          ).animate().slide(duration: 500.ms),
+        Positioned(
+          //倒數計時
+            top: 180,
+            child:Container(
+              height: 120,
+              width: 100,
+              child: Text(
+                "${Det.mathText}",
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  backgroundColor: Colors.transparent,
+                  fontSize: 100,
+                  color: Colors.black,
+                  inherit: false,
+                ),
+              ),
+            )
+        ),
+        Positioned(
           //開始前提醒視窗
           bottom: 100.0,
           child: Container(
@@ -65,40 +80,34 @@ class _PoseDetectorViewState extends State<PoseDetectorView_A> {
             padding: EdgeInsets.all(Det.remindpaddingsize),
             alignment: Alignment.center,
             decoration: new BoxDecoration(
-              gradient: LinearGradient(colors: [
-                Color.fromARGB(200, 18, 255, 247),
-                Color.fromARGB(200, 0, 236, 188)
-              ]),
+              color: Color.fromARGB(132, 255, 255, 255),
               borderRadius: BorderRadius.all(Radius.circular(20.0)),
             ),
             child: Text(
               "上半身拍攝於畫面框線內\n並維持鏡頭穩定\n準備完成請按「Start」",
               textAlign: TextAlign.center,
               style: TextStyle(
+                backgroundColor: Colors.transparent,
                 fontSize: Det.remindtextsize,
-                color: Colors.white,
+                color: Colors.black,
                 height: 1.2,
                 inherit: false,
               ),
             ),
           ),
-        ).animate().fade().slide(),
+        ).animate().slide(duration: 500.ms),
         Positioned(
             //復健按鈕
             bottom: 15.0,
-            left: 20,
             child: Container(
-              decoration: new BoxDecoration(
-                gradient: LinearGradient(colors: [
-                  Color.fromARGB(255, 18, 255, 247),
-                  Color.fromARGB(255, 0, 236, 188)
-                ]),
-                borderRadius: BorderRadius.all(Radius.circular(10.0)),
-              ),
+              height: Det.buttomsize,
               child: ElevatedButton(
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.transparent,
+                  shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.all(Radius.circular(50)),
+                ),
                   padding: EdgeInsets.all(15),
+                  backgroundColor: Color.fromARGB(250, 255, 190, 52),
                 ),
                 child: Text("Start!",
                     style: TextStyle(
@@ -110,7 +119,7 @@ class _PoseDetectorViewState extends State<PoseDetectorView_A> {
                   Det.setStandpoint();
                 },
               ),
-            )).animate().fade().slide(),
+            )).animate().slide(duration: 500.ms),
         Positioned(
           //計數器UI
           bottom: 10,
@@ -118,10 +127,7 @@ class _PoseDetectorViewState extends State<PoseDetectorView_A> {
           child: Container(
             padding: EdgeInsets.all(10),
             decoration: new BoxDecoration(
-              gradient: LinearGradient(colors: [
-                Color.fromARGB(250, 18, 255, 247),
-                Color.fromARGB(250, 0, 236, 188)
-              ]),
+              color: Color.fromARGB(250, 65, 64, 64),
               borderRadius: BorderRadius.horizontal(
                 left: Radius.circular(20),
                 right: Radius.circular(0),
@@ -133,8 +139,8 @@ class _PoseDetectorViewState extends State<PoseDetectorView_A> {
               "次數\n${Det.getcounter()}/${Det.getTarget()}",
               textAlign: TextAlign.center,
               style: TextStyle(
-                fontSize: 30,
-                color: Colors.black,
+                fontSize: 25,
+                color: Color.fromARGB(250, 255, 190, 52),
                 height: 1.2,
                 inherit: false,
               ),
@@ -148,10 +154,7 @@ class _PoseDetectorViewState extends State<PoseDetectorView_A> {
           child: Container(
             padding: EdgeInsets.all(10),
             decoration: new BoxDecoration(
-              gradient: LinearGradient(colors: [
-                Color.fromARGB(250, 18, 255, 247),
-                Color.fromARGB(250, 0, 236, 188)
-              ]),
+              color: Color.fromARGB(250, 65, 64, 64),
               borderRadius: BorderRadius.horizontal(
                 left: Radius.circular(0),
                 right: Radius.circular(20),
@@ -163,23 +166,20 @@ class _PoseDetectorViewState extends State<PoseDetectorView_A> {
               "秒數\n${Det.getposetimecounter()}/${Det.getposetimeTarget()}",
               textAlign: TextAlign.center,
               style: TextStyle(
-                fontSize: 30,
-                color: Colors.black,
+                fontSize: 25,
+                color: Color.fromARGB(250, 255, 190, 52),
                 height: 1.2,
                 inherit: false,
               ),
             ),
-          ).animate().fade().slide(),
+          ),
         ).animate().fade().slide(),
-        Positioned(
-          bottom: 80,
+        Positioned(//提醒視窗
+          bottom: 100,
           child: Container(
             padding: EdgeInsets.all(30),
             decoration: new BoxDecoration(
-              gradient: LinearGradient(colors: [
-                Color.fromARGB(150, 18, 255, 247),
-                Color.fromARGB(150, 0, 236, 188)
-              ]),
+              color: Color.fromARGB(218, 255, 190, 52),
               borderRadius: BorderRadius.horizontal(
                 left: Radius.circular(30),
                 right: Radius.circular(30),
@@ -191,7 +191,7 @@ class _PoseDetectorViewState extends State<PoseDetectorView_A> {
               "${Det.orderText}",
               textAlign: TextAlign.center,
               style: TextStyle(
-                fontSize: 32,
+                fontSize: 28,
                 color: Colors.white,
                 height: 1.2,
                 inherit: false,
@@ -200,11 +200,8 @@ class _PoseDetectorViewState extends State<PoseDetectorView_A> {
           ),
         )
             .animate(
-                delay: 1000.ms, onPlay: (controller) => controller.repeat())
-            .scaleXY(
-              end: 0.2,
-              curve: Curves.easeInOutCubic,
-            ),
+                onPlay: (controller) => controller.repeat())
+            .scaleXY(end: 0.2,duration: 2.seconds),
 
       ],
     );
@@ -243,50 +240,35 @@ class Detector {
   bool startdDetector = false; //偵測
   bool endDetector = false; //跳轉
   bool DetectorED = false;
+  bool timerbool=true;
   double? Standpoint_X = 0;
   double? Standpoint_Y = 0;
   double? Standpoint_bodymind = 0;
   double remindtextsize = 25;
   double remindpaddingsize = 10;
   double buttomtextsize = 35;
+  double buttomsize = 80;
   double Targetwidth = 0;
   double Targetheight = 0;
   double counterUIsize = 0;
+  double fakepreson = 450;
   String orderText = "請提起左肩";
+  String mathText = "";
 
   void startD() {
     //開始辨識
     this.startdDetector = true;
     print("startdDetector be true");
+    settimer();
     buttomtextsize = 0;
     remindtextsize = 0;
     remindpaddingsize = 0;
     counterUIsize = 100;
     Targetwidth = 360;
     Targetheight = 110;
+    buttomsize = 0;
+    fakepreson = 0;
   }
-
-  void endD() {
-    //退出頁面
-    this.posecounter = 0;
-    this.startdDetector = false;
-    this.endDetector = false;
-    this.posetimecounter = 0; //復健動作持續秒數
-    this.posecounter = 0; //復健動作實作次數
-    this.startdDetector = false; //偵測
-    this.endDetector = false; //跳轉
-    this.DetectorED = false;
-    this.Standpoint_X = 0;
-    this.Standpoint_Y = 0;
-    this.remindtextsize = 25;
-    this.remindpaddingsize = 10;
-    this.buttomtextsize = 35;
-    this.Targetwidth = 0;
-    this.Targetheight = 0;
-    this.counterUIsize = 0;
-    this.orderText = " ";
-  }
-
   int getcounter() {
     return this.posecounter;
   }
@@ -313,6 +295,11 @@ class Detector {
 
   void poseDetector() {
     //偵測判定
+    if((((posedata[22]!+posedata[24]!)/2)-this.Standpoint_bodymind!)>70||
+        (((posedata[22]!+posedata[24]!)/2)-this.Standpoint_bodymind!)<-70){
+      this.orderText = "側傾過大";
+      return ;
+    }
     if (this.startdDetector) {
       DetectorED = true;
       print(posedata[23]!);
@@ -334,9 +321,6 @@ class Detector {
         //沒有保持
         this.posetimecounter = 0;
       }
-      if((((posedata[22]!+posedata[24]!)/2)-this.Standpoint_bodymind!)<20){
-
-      }
     } else if (DetectorED) {
       //預防空值被訪問
       if (posedata[23]! > (this.Standpoint_Y!)) {
@@ -350,17 +334,29 @@ class Detector {
 
   void setStandpoint() {
     //設定基準點(左上角為(0,0)向右下)
-    this.Standpoint_X = posedata[22]! - 50;
-    this.Standpoint_Y = posedata[23]! - 50;
+    this.Standpoint_X = posedata[22]! - 30;
+    this.Standpoint_Y = posedata[23]! - 30;
     this.Standpoint_bodymind = (posedata[22]!+posedata[24]!)/2;
   }
 
   void posetargetdone() {
     //完成任務後復歸
     if (this.posecounter == this.poseTarget) {
-      this.posecounter = 0;
-      this.startdDetector = false;
       this.endDetector = true;
     }
+  }
+
+  void settimer(){
+      Timer.periodic(//觸發偵測timer
+        const Duration(seconds: 1),
+            (timer) {
+          poseDetector(); //偵測目標是否完成動作
+          posetargetdone(); //偵測目標是否完成指定次數
+          if(!this.timerbool){
+            print("cancel timer");
+            timer.cancel();
+          }
+        },
+      );
   }
 }

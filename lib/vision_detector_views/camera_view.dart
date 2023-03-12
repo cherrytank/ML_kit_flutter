@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:camera/camera.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:google_mlkit_commons/google_mlkit_commons.dart';
 
 import '../main.dart';
@@ -100,8 +101,7 @@ class _CameraViewState extends State<CameraView> {
     if (cameras.length == 1) return null;
     return Container(
         decoration: new BoxDecoration(
-          gradient: LinearGradient(colors: [Color.fromARGB(255, 18, 255, 247), Color.fromARGB(
-              255, 0, 236, 188)]),
+          color: Color.fromARGB(150, 255, 255, 255),
           borderRadius: BorderRadius.all(Radius.circular(50.0)),),
         height: 70.0,
         width: 70.0,
@@ -113,7 +113,7 @@ class _CameraViewState extends State<CameraView> {
                 ? Icons.flip_camera_ios_outlined
                 : Icons.flip_camera_android_outlined,
             size: 40,
-            color: Colors.white,
+            color: Colors.black,
           ),
         ));
   }
@@ -188,7 +188,6 @@ class _CameraViewState extends State<CameraView> {
   Future _switchLiveCamera() async {
     setState(() => _changingCameraLens = true);
     _cameraIndex = (_cameraIndex + 1) % cameras.length;
-
     await _stopLiveFeed();
     await _startLiveFeed();
     setState(() => _changingCameraLens = false);
