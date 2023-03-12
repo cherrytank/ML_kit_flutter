@@ -66,7 +66,7 @@ class _PoseDetectorViewState extends State<PoseDetectorView_A> {
                 style: TextStyle(
                   backgroundColor: Colors.transparent,
                   fontSize: 100,
-                  color: Colors.black,
+                  color: Colors.amber,
                   inherit: false,
                 ),
               ),
@@ -115,8 +115,7 @@ class _PoseDetectorViewState extends State<PoseDetectorView_A> {
                       color: Colors.white,
                     )),
                 onPressed: () {
-                  Det.startD();
-                  Det.setStandpoint();
+                  Det.startd();
                 },
               ),
             )).animate().slide(duration: 500.ms),
@@ -255,10 +254,27 @@ class Detector {
   String orderText = "請提起左肩";
   String mathText = "";
 
+  void startd(){//倒數計時
+    int counter = 5;
+    Timer.periodic(//觸發偵測timer
+      const Duration(seconds: 1),
+          (timer) {
+            mathText = "${counter--}";
+        if(counter<0){
+          print("cancel timer");
+          timer.cancel();
+          mathText = " ";
+          startD();
+        }
+      },
+    );
+  }
+
   void startD() {
     //開始辨識
     this.startdDetector = true;
     print("startdDetector be true");
+    setStandpoint();
     settimer();
     buttomtextsize = 0;
     remindtextsize = 0;
@@ -269,6 +285,7 @@ class Detector {
     buttomsize = 0;
     fakepreson = 0;
   }
+
   int getcounter() {
     return this.posecounter;
   }
