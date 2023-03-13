@@ -312,8 +312,8 @@ class Detector {
 
   void poseDetector() {
     //偵測判定
-    if((((posedata[22]!+posedata[24]!)/2)-this.Standpoint_bodymind!)>70||
-        (((posedata[22]!+posedata[24]!)/2)-this.Standpoint_bodymind!)<-70){
+    if((((posedata[22]!+posedata[24]!)/2)-this.Standpoint_bodymind!)>100||
+        (((posedata[22]!+posedata[24]!)/2)-this.Standpoint_bodymind!)<-100){
       this.orderText = "側傾過大";
       return ;
     }

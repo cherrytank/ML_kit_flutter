@@ -7,8 +7,8 @@ import 'package:flutter/services.dart';
 import 'package:google_mlkit_commons/google_mlkit_commons.dart';
 
 import '../main.dart';
-
-enum ScreenMode { liveFeed, gallery }
+bool cameramode_front = false;
+enum ScreenMode { liveFeed }
 
 class CameraView extends StatefulWidget {
   CameraView(
@@ -33,7 +33,6 @@ class CameraView extends StatefulWidget {
 }
 
 class _CameraViewState extends State<CameraView> {
-  ScreenMode _mode = ScreenMode.liveFeed;
   CameraController? _controller;
   int _cameraIndex = -1;
   bool _changingCameraLens = false;
@@ -59,12 +58,7 @@ class _CameraViewState extends State<CameraView> {
         }
       }
     }
-
-    if (_cameraIndex != -1) {
       _startLiveFeed();
-    } else {
-      _mode = ScreenMode.gallery;
-    }
   }
 
   @override
@@ -97,7 +91,6 @@ class _CameraViewState extends State<CameraView> {
   }
 
   Widget? _floatingActionButton() {
-    if (_mode == ScreenMode.gallery) return null;
     if (cameras.length == 1) return null;
     return Container(
         decoration: new BoxDecoration(
@@ -170,6 +163,7 @@ class _CameraViewState extends State<CameraView> {
       ResolutionPreset.high,
       enableAudio: false,
     );
+
     _controller?.initialize().then((_) {
       if (!mounted) {
         return;
@@ -188,6 +182,12 @@ class _CameraViewState extends State<CameraView> {
   Future _switchLiveCamera() async {
     setState(() => _changingCameraLens = true);
     _cameraIndex = (_cameraIndex + 1) % cameras.length;
+    if(cameramode_front){
+      cameramode_front =false;
+    }
+    else{
+      cameramode_front = true;
+    }
     await _stopLiveFeed();
     await _startLiveFeed();
     setState(() => _changingCameraLens = false);
