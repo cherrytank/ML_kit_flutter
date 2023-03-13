@@ -256,6 +256,8 @@ class Detector {
 
   void startd(){//倒數計時
     int counter = 5;
+    buttomtextsize = 0;
+    buttomsize = 0;
     Timer.periodic(//觸發偵測timer
       const Duration(seconds: 1),
           (timer) {
@@ -276,13 +278,11 @@ class Detector {
     print("startdDetector be true");
     setStandpoint();
     settimer();
-    buttomtextsize = 0;
     remindtextsize = 0;
     remindpaddingsize = 0;
     counterUIsize = 100;
     Targetwidth = 360;
     Targetheight = 110;
-    buttomsize = 0;
     fakepreson = 0;
   }
 
