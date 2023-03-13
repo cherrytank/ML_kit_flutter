@@ -65,6 +65,7 @@ class _CameraViewState extends State<CameraView> {
   void dispose() {
     _stopLiveFeed();
     super.dispose();
+    cameramode_front = false;
   }
 
   @override
