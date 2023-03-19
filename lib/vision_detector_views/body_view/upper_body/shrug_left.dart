@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'dart:async';
 import 'package:google_mlkit_pose_detection/google_mlkit_pose_detection.dart';
-import 'camera_view.dart';
-import 'painters/pose_painter.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import '../assembly.dart';
 
 //左肩聳肩復健頁面
 class PoseDetectorView_A extends StatefulWidget {
@@ -24,12 +23,13 @@ class _PoseDetectorViewState extends State<PoseDetectorView_A> {
     _canProcess = false;
     _poseDetector.close();
     Det.timerbool = false;//關閉timer
+    cameramode_front =false;//覆歸攝影機設定
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    if (Det.getendDetector()) {
+    if (Det.endDetector) {
       //退回上一頁
       print("back page");
       Navigator.pop(context);
@@ -135,7 +135,7 @@ class _PoseDetectorViewState extends State<PoseDetectorView_A> {
             width: Det.counterUIsize,
             height: 90,
             child: Text(
-              "次數\n${Det.getcounter()}/${Det.getTarget()}",
+              "次數\n${Det.posecounter}/${Det.poseTarget}",
               textAlign: TextAlign.center,
               style: TextStyle(
                 fontSize: 25,
@@ -162,7 +162,7 @@ class _PoseDetectorViewState extends State<PoseDetectorView_A> {
             width: Det.counterUIsize,
             height: 90,
             child: Text(
-              "秒數\n${Det.getposetimecounter()}/${Det.getposetimeTarget()}",
+              "秒數\n${Det.posetimecounter}/${Det.posetimeTarget}",
               textAlign: TextAlign.center,
               style: TextStyle(
                 fontSize: 25,
@@ -239,20 +239,20 @@ class Detector {
   bool startdDetector = false; //偵測
   bool endDetector = false; //跳轉
   bool DetectorED = false;
-  bool timerbool=true;
+  bool timerbool=true;//倒數計時器
   double? Standpoint_X = 0;
   double? Standpoint_Y = 0;
-  double? Standpoint_bodymind = 0;
-  double remindtextsize = 25;
-  double remindpaddingsize = 10;
-  double buttomtextsize = 35;
-  double buttomsize = 80;
+  double? Standpoint_bodymind = 0;//身體終點
+  double remindtextsize = 25;//提醒視窗
+  double remindpaddingsize = 10;//提醒視窗
+  double buttomtextsize = 35;//開始復健按鈕
+  double buttomsize = 80;//開始復健按鈕
   double Targetwidth = 0;
   double Targetheight = 0;
-  double counterUIsize = 0;
-  double fakepreson = 450;
-  String orderText = "請提起左肩";
-  String mathText = "";
+  double counterUIsize = 0;//開始後UI介面
+  double fakepreson = 450;//虛擬假人
+  String orderText = "請提起左肩";//目標提醒
+  String mathText = "";//倒數文字
 
   void startd(){//倒數計時
     int counter = 5;
@@ -284,30 +284,6 @@ class Detector {
     Targetwidth = 360;
     Targetheight = 110;
     fakepreson = 0;
-  }
-
-  int getcounter() {
-    return this.posecounter;
-  }
-
-  int getTarget() {
-    return this.poseTarget;
-  }
-
-  bool getendDetector() {
-    return this.endDetector;
-  }
-
-  int getposetimecounter() {
-    return this.posetimecounter;
-  }
-
-  int getposetimeTarget() {
-    return this.posetimeTarget;
-  }
-
-  double getStandpoint() {
-    return this.Standpoint_Y!;
   }
 
   void poseDetector() {
@@ -357,7 +333,7 @@ class Detector {
   }
 
   void posetargetdone() {
-    //完成任務後復歸
+    //完成任務後發出退出信號
     if (this.posecounter == this.poseTarget) {
       this.endDetector = true;
     }
