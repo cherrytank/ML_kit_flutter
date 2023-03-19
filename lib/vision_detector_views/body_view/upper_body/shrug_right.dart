@@ -6,19 +6,19 @@ import 'dart:math';
 import '../assembly.dart';
 
 //右肩聳肩復健頁面
-class shrug_left extends StatefulWidget {
+class shrug_right extends StatefulWidget {
   @override
   State<StatefulWidget> createState() => _PoseDetectorViewState();
 }
 
-class _PoseDetectorViewState extends State<shrug_left> {
+class _PoseDetectorViewState extends State<shrug_right> {
   final PoseDetector _poseDetector =
       PoseDetector(options: PoseDetectorOptions());
   bool _canProcess = true;
   bool _isBusy = false;
   CustomPaint? _customPaint;
   String? _text;
-  Detector_shrug_left Det = new Detector_shrug_left();//建立偵測系統
+  Detector_shrug_right Det = new Detector_shrug_right();//建立偵測系統
   @override
   void dispose() async {
     _canProcess = false;
@@ -232,7 +232,7 @@ class _PoseDetectorViewState extends State<shrug_left> {
   }
 }
 
-class Detector_shrug_left {
+class Detector_shrug_right {
   int posetimecounter = 0; //復健動作持續秒數
   int posetimeTarget = 5; //復健動作持續秒數目標
   int posecounter = 0; //復健動作實作次數
@@ -297,9 +297,9 @@ class Detector_shrug_left {
     }
     if (this.startdDetector) {
       DetectorED = true;
-      print(posedata[23]!);
+      print(posedata[25]!);
       print(this.Standpoint_Y!);
-      this.orderText = "抬起左肩";
+      this.orderText = "抬起右肩";
       if (this.posetimecounter == this.posetimeTarget) {
         //秒數達成
         this.startdDetector = false;
@@ -307,7 +307,7 @@ class Detector_shrug_left {
         this.posetimecounter = 0;
         this.orderText = "達標!";
       }
-      if (posedata[23]! < (this.Standpoint_Y!) && this.startdDetector) {
+      if (posedata[25]! < (this.Standpoint_Y!) && this.startdDetector) {
         //每秒目標
         this.posetimecounter++;
         print(this.posetimecounter);
@@ -318,7 +318,7 @@ class Detector_shrug_left {
       }
     } else if (DetectorED) {
       //預防空值被訪問
-      if (posedata[23]! > (this.Standpoint_Y!)) {
+      if (posedata[25]! > (this.Standpoint_Y!)) {
         //確認復歸
         this.startdDetector = true;
       } else {
@@ -329,8 +329,8 @@ class Detector_shrug_left {
 
   void setStandpoint() {
     //設定基準點(左上角為(0,0)向右下)
-    this.Standpoint_X = posedata[22]! - 30;
-    this.Standpoint_Y = posedata[23]! - 30;
+    this.Standpoint_X = posedata[24]! - 30;
+    this.Standpoint_Y = posedata[25]! - 30;
     this.Standpoint_bodymind_x = (posedata[22]!+posedata[24]!)/2;
     this.Standpoint_bodymind_y = (posedata[23]!+posedata[25]!)/2;
   }

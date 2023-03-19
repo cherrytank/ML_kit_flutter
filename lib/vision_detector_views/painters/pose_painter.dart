@@ -3,7 +3,7 @@ import 'package:google_mlkit_pose_detection/google_mlkit_pose_detection.dart';
 import 'coordinates_translator.dart';
 import '../camera_view.dart';
 List<double?> posedata=[];
-
+List<double?> posetrust=[];
 class PosePainter extends CustomPainter {
   PosePainter(this.poses, this.absoluteImageSize, this.rotation);
   final List<Pose> poses;
@@ -161,6 +161,41 @@ class PosePainter extends CustomPainter {
         pose.landmarks[PoseLandmarkType.rightHeel]?.x,pose.landmarks[PoseLandmarkType.rightHeel]?.y,//60,61
         pose.landmarks[PoseLandmarkType.leftFootIndex]?.x,pose.landmarks[PoseLandmarkType.leftFootIndex]?.y,//62,63
         pose.landmarks[PoseLandmarkType.rightFootIndex]?.x,pose.landmarks[PoseLandmarkType.rightFootIndex]?.y,//64,65
+      ];
+      posetrust=[
+        pose.landmarks[PoseLandmarkType.nose]?.likelihood,
+        pose.landmarks[PoseLandmarkType.leftEyeInner]?.likelihood,
+        pose.landmarks[PoseLandmarkType.leftEye]?.likelihood,
+        pose.landmarks[PoseLandmarkType.leftEyeOuter]?.likelihood,
+        pose.landmarks[PoseLandmarkType.rightEyeInner]?.likelihood,
+        pose.landmarks[PoseLandmarkType.rightEye]?.likelihood,
+        pose.landmarks[PoseLandmarkType.rightEyeOuter]?.likelihood,
+        pose.landmarks[PoseLandmarkType.leftEar]?.likelihood,
+        pose.landmarks[PoseLandmarkType.rightEar]?.likelihood,
+        pose.landmarks[PoseLandmarkType.leftMouth]?.likelihood,
+        pose.landmarks[PoseLandmarkType.rightMouth]?.likelihood,
+        pose.landmarks[PoseLandmarkType.leftShoulder]?.likelihood,
+        pose.landmarks[PoseLandmarkType.rightShoulder]?.likelihood,
+        pose.landmarks[PoseLandmarkType.leftElbow]?.likelihood,
+        pose.landmarks[PoseLandmarkType.rightElbow]?.likelihood,
+        pose.landmarks[PoseLandmarkType.leftWrist]?.likelihood,
+        pose.landmarks[PoseLandmarkType.rightWrist]?.likelihood,
+        pose.landmarks[PoseLandmarkType.leftPinky]?.likelihood,
+        pose.landmarks[PoseLandmarkType.rightPinky]?.likelihood,
+        pose.landmarks[PoseLandmarkType.leftIndex]?.likelihood,
+        pose.landmarks[PoseLandmarkType.rightIndex]?.likelihood,
+        pose.landmarks[PoseLandmarkType.leftThumb]?.likelihood,
+        pose.landmarks[PoseLandmarkType.rightThumb]?.likelihood,
+        pose.landmarks[PoseLandmarkType.leftHip]?.likelihood,
+        pose.landmarks[PoseLandmarkType.rightHip]?.likelihood,
+        pose.landmarks[PoseLandmarkType.leftKnee]?.likelihood,
+        pose.landmarks[PoseLandmarkType.rightKnee]?.likelihood,
+        pose.landmarks[PoseLandmarkType.leftAnkle]?.likelihood,
+        pose.landmarks[PoseLandmarkType.rightAnkle]?.likelihood,
+        pose.landmarks[PoseLandmarkType.leftHeel]?.likelihood,
+        pose.landmarks[PoseLandmarkType.rightHeel]?.likelihood,
+        pose.landmarks[PoseLandmarkType.leftFootIndex]?.likelihood,
+        pose.landmarks[PoseLandmarkType.rightFootIndex]?.likelihood,
       ];
     }
   }

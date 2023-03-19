@@ -42,15 +42,29 @@ class Home extends StatelessWidget {
                           padding: EdgeInsets.all(10.0),
                           textStyle: const TextStyle(fontSize: 30)
                         ),
-                        child: Text("Pose Detection_A"),
+                        child: Text("shrug_left"),
                         onPressed: () {
                           Navigator.push(
                             context,
-                            new MaterialPageRoute(builder: (context) => new PoseDetectorView_A()),
+                            new MaterialPageRoute(builder: (context) => new shrug_left()),
                           );
                         },
                       ),
                       SizedBox(height: 10,),
+                      ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                            minimumSize: Size(350,50),
+                            padding: EdgeInsets.all(10.0),
+                            textStyle: const TextStyle(fontSize: 30)
+                        ),
+                        child: Text("shrug_right"),
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            new MaterialPageRoute(builder: (context) => new shrug_right()),
+                          );
+                        },
+                      ),
                     ],
                   ),
             ),
