@@ -5,10 +5,6 @@ PODS:
   - google_mlkit_commons (0.2.0):
     - Flutter
     - MLKitVision
-  - google_mlkit_face_detection (0.5.0):
-    - Flutter
-    - google_mlkit_commons
-    - GoogleMLKit/FaceDetection (~> 3.2.0)
   - google_mlkit_pose_detection (0.5.0):
     - Flutter
     - google_mlkit_commons
@@ -18,9 +14,6 @@ PODS:
     - GoogleUtilities/Environment (~> 7.7)
     - nanopb (< 2.30910.0, >= 2.30908.0)
     - PromisesObjC (< 3.0, >= 1.2)
-  - GoogleMLKit/FaceDetection (3.2.0):
-    - GoogleMLKit/MLKitCore
-    - MLKitFaceDetection (~> 2.2.0)
   - GoogleMLKit/MLKitCore (3.2.0):
     - MLKitCommon (~> 8.0.0)
   - GoogleMLKit/PoseDetection (3.2.0):
@@ -65,9 +58,6 @@ PODS:
     - GoogleUtilitiesComponents (~> 1.0)
     - GTMSessionFetcher/Core (~> 1.1)
     - Protobuf (~> 3.12)
-  - MLKitFaceDetection (2.2.0):
-    - MLKitCommon (~> 8.0)
-    - MLKitVision (~> 4.2)
   - MLKitPoseDetection (1.0.0-beta10):
     - MLKitCommon (~> 8.0)
     - MLKitPoseDetectionCommon (= 1.0.0-beta10)
@@ -101,8 +91,9 @@ PODS:
     - nanopb/encode (= 2.30909.0)
   - nanopb/decode (2.30909.0)
   - nanopb/encode (2.30909.0)
-  - path_provider_ios (0.0.1):
+  - path_provider_foundation (0.0.1):
     - Flutter
+    - FlutterMacOS
   - PromisesObjC (2.2.0)
   - Protobuf (3.22.0)
 
@@ -110,11 +101,10 @@ DEPENDENCIES:
   - camera_avfoundation (from `.symlinks/plugins/camera_avfoundation/ios`)
   - Flutter (from `Flutter`)
   - google_mlkit_commons (from `.symlinks/plugins/google_mlkit_commons/ios`)
-  - google_mlkit_face_detection (from `.symlinks/plugins/google_mlkit_face_detection/ios`)
   - google_mlkit_pose_detection (from `.symlinks/plugins/google_mlkit_pose_detection/ios`)
   - GoogleMLKit/TextRecognitionChinese (~> 3.2.0)
   - image_picker_ios (from `.symlinks/plugins/image_picker_ios/ios`)
-  - path_provider_ios (from `.symlinks/plugins/path_provider_ios/ios`)
+  - path_provider_foundation (from `.symlinks/plugins/path_provider_foundation/ios`)
 
 SPEC REPOS:
   trunk:
@@ -126,7 +116,6 @@ SPEC REPOS:
     - GTMSessionFetcher
     - MLImage
     - MLKitCommon
-    - MLKitFaceDetection
     - MLKitPoseDetection
     - MLKitPoseDetectionAccurate
     - MLKitPoseDetectionCommon
@@ -145,20 +134,17 @@ EXTERNAL SOURCES:
     :path: Flutter
   google_mlkit_commons:
     :path: ".symlinks/plugins/google_mlkit_commons/ios"
-  google_mlkit_face_detection:
-    :path: ".symlinks/plugins/google_mlkit_face_detection/ios"
   google_mlkit_pose_detection:
     :path: ".symlinks/plugins/google_mlkit_pose_detection/ios"
   image_picker_ios:
     :path: ".symlinks/plugins/image_picker_ios/ios"
-  path_provider_ios:
-    :path: ".symlinks/plugins/path_provider_ios/ios"
+  path_provider_foundation:
+    :path: ".symlinks/plugins/path_provider_foundation/ios"
 
 SPEC CHECKSUMS:
-  camera_avfoundation: 07c77549ea54ad95d8581be86617c094a46280d9
+  camera_avfoundation: 3125e8cd1a4387f6f31c6c63abb8a55892a9eeeb
   Flutter: f04841e97a9d0b0a8025694d0796dd46242b2854
   google_mlkit_commons: e9070f57232c3a3e4bd42fdfa621bb1f4bb3e709
-  google_mlkit_face_detection: ab4c98846c4e9b0d48e5bd386cedb14feb676802
   google_mlkit_pose_detection: d5e75ae41afbd8dec29813c4ba5fe201ecd7322e
   GoogleDataTransport: ea169759df570f4e37bdee1623ec32a7e64e67c4
   GoogleMLKit: 0017a6a8372e1a182139b9def4d89be5d87ca5a7
@@ -166,10 +152,9 @@ SPEC CHECKSUMS:
   GoogleUtilities: c2bdc4cf2ce786c4d2e6b3bcfd599a25ca78f06f
   GoogleUtilitiesComponents: 679b2c881db3b615a2777504623df6122dd20afe
   GTMSessionFetcher: 5595ec75acf5be50814f81e9189490412bad82ba
-  image_picker_ios: b786a5dcf033a8336a657191401bfdf12017dabb
+  image_picker_ios: 4a8aadfbb6dc30ad5141a2ce3832af9214a705b5
   MLImage: 489dfec109f21da8621b28d476401aaf7a0d4ff4
   MLKitCommon: f6da6c5659618c070b50a80db01248ebe2964175
-  MLKitFaceDetection: 9f29d8d0bb38911281407e24e74d2e5da812ba8d
   MLKitPoseDetection: 619212a00d60dbd045900f351f5d536a29293209
   MLKitPoseDetectionAccurate: bd23e4035931bfd7daf4e649a9d34c9c1cd455e8
   MLKitPoseDetectionCommon: 440b2b41504319ff9855cd941f1e4606af069e8b
@@ -178,7 +163,7 @@ SPEC CHECKSUMS:
   MLKitVision: 96c96571190b7f63eddf4a12068ce8a8689e0d2c
   MLKitXenoCommon: 39b7097db51f4716a2a0ff4e4459e002499f5523
   nanopb: b552cce312b6c8484180ef47159bc0f65a1f0431
-  path_provider_ios: 14f3d2fd28c4fdb42f44e0f751d12861c43cee02
+  path_provider_foundation: c68054786f1b4f3343858c1e1d0caaded73f0be9
   PromisesObjC: 09985d6d70fbe7878040aa746d78236e6946d2ef
   Protobuf: 5e6cbc143d02fe08585d86b0098f8b755d2caaab
 

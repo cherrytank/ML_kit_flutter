@@ -1,6 +1,7 @@
 export 'body_view/upper_body/shrug_left.dart';
 export 'body_view/upper_body/shrug_right.dart';
-
+export 'body_view/upper_body/crutch_right.dart';
+export 'body_view/upper_body/hold_hands_right.dart';
 /*
 動作中英對照表(_right ,_left )
   初階上肢

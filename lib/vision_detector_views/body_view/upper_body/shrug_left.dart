@@ -5,7 +5,7 @@ import 'package:flutter_animate/flutter_animate.dart';
 import 'dart:math';
 import '../assembly.dart';
 
-//右肩聳肩復健頁面
+//左肩聳肩復健頁面
 class shrug_left extends StatefulWidget {
   @override
   State<StatefulWidget> createState() => _PoseDetectorViewState();
@@ -253,7 +253,7 @@ class Detector_shrug_left {
   double Targetheight = 0;
   double counterUIsize = 0;//開始後UI介面
   double fakepreson = 450;//虛擬假人
-  String orderText = "請提起右肩";//目標提醒
+  String orderText = "請提起左肩";//目標提醒
   String mathText = "";//倒數文字
 
   void startd(){//倒數計時
@@ -291,7 +291,7 @@ class Detector_shrug_left {
   void poseDetector() {
     //偵測判定
     if(distance(Standpoint_bodymind_x!, Standpoint_bodymind_y!,
-        (posedata[22]!+posedata[24]!)/2, (posedata[23]!+posedata[25]!)/2)>200&&this.startdDetector){
+        (posedata[22]!+posedata[24]!)/2, (posedata[23]!+posedata[25]!)/2)>100&&this.startdDetector){
       this.orderText = "側傾過大";
       return ;
     }
@@ -329,8 +329,8 @@ class Detector_shrug_left {
 
   void setStandpoint() {
     //設定基準點(左上角為(0,0)向右下)
-    this.Standpoint_X = posedata[22]! - 30;
-    this.Standpoint_Y = posedata[23]! - 30;
+    this.Standpoint_X = posedata[22]! - 20;
+    this.Standpoint_Y = posedata[23]! - 20;
     this.Standpoint_bodymind_x = (posedata[22]!+posedata[24]!)/2;
     this.Standpoint_bodymind_y = (posedata[23]!+posedata[25]!)/2;
   }

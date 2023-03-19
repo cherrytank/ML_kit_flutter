@@ -5,20 +5,20 @@ import 'package:flutter_animate/flutter_animate.dart';
 import 'dart:math';
 import '../assembly.dart';
 
-//右肩聳肩復健頁面
-class shrug_right extends StatefulWidget {
+//右掌復健頁面
+class hold_hands_right extends StatefulWidget {
   @override
   State<StatefulWidget> createState() => _PoseDetectorViewState();
 }
 
-class _PoseDetectorViewState extends State<shrug_right> {
+class _PoseDetectorViewState extends State<hold_hands_right> {
   final PoseDetector _poseDetector =
       PoseDetector(options: PoseDetectorOptions());
   bool _canProcess = true;
   bool _isBusy = false;
   CustomPaint? _customPaint;
   String? _text;
-  Detector_shrug_right Det = new Detector_shrug_right();//建立偵測系統
+  Detector_hold_hands_right Det = new Detector_hold_hands_right();//建立偵測系統
   @override
   void dispose() async {
     _canProcess = false;
@@ -51,6 +51,7 @@ class _PoseDetectorViewState extends State<shrug_right> {
         Positioned(
           //人形立牌
           top: 140,
+          left: 30,
           child:Image(
             height: Det.fakepreson,
             image: AssetImage("assets/picture/b.png"),)
@@ -85,7 +86,7 @@ class _PoseDetectorViewState extends State<shrug_right> {
               borderRadius: BorderRadius.all(Radius.circular(20.0)),
             ),
             child: Text(
-              "上半身拍攝於畫面框線內\n並維持鏡頭穩定\n準備完成請按「Start」",
+              "上半身至膝蓋拍攝於畫面內\n並維持鏡頭穩定\n準備完成請按「Start」",
               textAlign: TextAlign.center,
               style: TextStyle(
                 backgroundColor: Colors.transparent,
@@ -232,7 +233,7 @@ class _PoseDetectorViewState extends State<shrug_right> {
   }
 }
 
-class Detector_shrug_right {
+class Detector_hold_hands_right {
   int posetimecounter = 0; //復健動作持續秒數
   int posetimeTarget = 5; //復健動作持續秒數目標
   int posecounter = 0; //復健動作實作次數
@@ -252,8 +253,8 @@ class Detector_shrug_right {
   double Targetwidth = 0;
   double Targetheight = 0;
   double counterUIsize = 0;//開始後UI介面
-  double fakepreson = 450;//虛擬假人
-  String orderText = "請提起右肩";//目標提醒
+  double fakepreson = 0;//虛擬假人
+  String orderText = "右手撐直";//目標提醒
   String mathText = "";//倒數文字
 
   void startd(){//倒數計時
@@ -290,16 +291,9 @@ class Detector_shrug_right {
 
   void poseDetector() {
     //偵測判定
-    if(distance(Standpoint_bodymind_x!, Standpoint_bodymind_y!,
-        (posedata[22]!+posedata[24]!)/2, (posedata[23]!+posedata[25]!)/2)>100&&this.startdDetector){
-      this.orderText = "側傾過大";
-      return ;
-    }
     if (this.startdDetector) {
       DetectorED = true;
-      print(posedata[25]!);
-      print(this.Standpoint_Y!);
-      this.orderText = "抬起右肩";
+      this.orderText = "右手撐直";
       if (this.posetimecounter == this.posetimeTarget) {
         //秒數達成
         this.startdDetector = false;
@@ -307,7 +301,9 @@ class Detector_shrug_right {
         this.posetimecounter = 0;
         this.orderText = "達標!";
       }
-      if (posedata[25]! < (this.Standpoint_Y!) && this.startdDetector) {
+      if (distance(posedata[32]!, posedata[33]!, posedata[48]!, posedata[49]!)>100
+          &&angle(posedata[24]!,posedata[25]!,posedata[28]!,posedata[29]!,posedata[32]!,posedata[33]!)>130
+          &&this.startdDetector) {
         //每秒目標
         this.posetimecounter++;
         print(this.posetimecounter);
@@ -318,19 +314,20 @@ class Detector_shrug_right {
       }
     } else if (DetectorED) {
       //預防空值被訪問
-      if (posedata[25]! > (this.Standpoint_Y!)) {
+      if (distance(posedata[32]!, posedata[33]!, posedata[48]!, posedata[49]!)<100) {
         //確認復歸
         this.startdDetector = true;
       } else {
-        this.orderText = "請復歸動作";
+        this.orderText = "手放回大腿";
+
       }
     }
   }
 
   void setStandpoint() {
     //設定基準點(左上角為(0,0)向右下)
-    this.Standpoint_X = posedata[24]! - 20;
-    this.Standpoint_Y = posedata[25]! - 20;
+    this.Standpoint_X = posedata[22]! - 20;
+    this.Standpoint_Y = posedata[23]! - 20;
     this.Standpoint_bodymind_x = (posedata[22]!+posedata[24]!)/2;
     this.Standpoint_bodymind_y = (posedata[23]!+posedata[25]!)/2;
   }
@@ -344,6 +341,17 @@ class Detector_shrug_right {
 
   double distance(double x1,double y1,double x2,double y2){
     return sqrt(pow((x1-x2).abs(),2)+pow((y1-y2).abs(),2));
+  }
+
+  double angle(double x1,double y1,double x2,double y2,double x3,double y3){
+    double vx1= x1-x2;
+    double vy1= y1-y2;
+    double vx2= x3-x2;
+    double vy2= y3-y2;
+    double porduct = vx1*vx2+vy1*vy2;
+    double result = acos(porduct/(distance(x1, y1, x2, y2)*distance(x3, y3, x2, y2)))*57.3;
+    print(result);
+    return result;
   }
 
   void settimer(){

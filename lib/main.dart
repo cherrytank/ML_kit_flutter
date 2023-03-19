@@ -65,6 +65,36 @@ class Home extends StatelessWidget {
                           );
                         },
                       ),
+                      SizedBox(height: 10,),
+                      ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                            minimumSize: Size(350,50),
+                            padding: EdgeInsets.all(10.0),
+                            textStyle: const TextStyle(fontSize: 30)
+                        ),
+                        child: Text("crutch_right"),
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            new MaterialPageRoute(builder: (context) => new crutch_right()),
+                          );
+                        },
+                      ),
+                      SizedBox(height: 10,),
+                      ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                            minimumSize: Size(350,50),
+                            padding: EdgeInsets.all(10.0),
+                            textStyle: const TextStyle(fontSize: 30)
+                        ),
+                        child: Text("hold_hands_right"),
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            new MaterialPageRoute(builder: (context) => new hold_hands_right()),
+                          );
+                        },
+                      ),
                     ],
                   ),
             ),
