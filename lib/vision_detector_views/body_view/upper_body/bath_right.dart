@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'dart:async';
 import 'package:google_mlkit_pose_detection/google_mlkit_pose_detection.dart';
@@ -5,20 +7,20 @@ import 'package:flutter_animate/flutter_animate.dart';
 import 'dart:math';
 import '../assembly.dart';
 
-//左肩聳肩復健頁面
-class shrug_left extends StatefulWidget {
+//右拐杖復健頁面
+class bath_right extends StatefulWidget {
   @override
   State<StatefulWidget> createState() => _PoseDetectorViewState();
 }
 
-class _PoseDetectorViewState extends State<shrug_left> {
+class _PoseDetectorViewState extends State<bath_right> {
   final PoseDetector _poseDetector =
       PoseDetector(options: PoseDetectorOptions());
   bool _canProcess = true;
   bool _isBusy = false;
   CustomPaint? _customPaint;
   String? _text;
-  Detector_shrug_left Det = new Detector_shrug_left();//建立偵測系統
+  Detector_bath_right Det = new Detector_bath_right();//建立偵測系統
   @override
   void dispose() async {
     _canProcess = false;
@@ -50,7 +52,7 @@ class _PoseDetectorViewState extends State<shrug_left> {
         ),
         Positioned(
           //人形立牌
-          top: 140,
+          top: 120,
           child:Image(
             height: Det.fakepreson,
             image: AssetImage("assets/picture/b.png"),)
@@ -85,7 +87,7 @@ class _PoseDetectorViewState extends State<shrug_left> {
               borderRadius: BorderRadius.all(Radius.circular(20.0)),
             ),
             child: Text(
-              "上半身拍攝於畫面框線內\n並維持鏡頭穩定\n準備完成請按「Start」",
+              "請將上半身拍攝於畫面內\n並維持鏡頭穩定\n準備完成請按「Start」",
               textAlign: TextAlign.center,
               style: TextStyle(
                 backgroundColor: Colors.transparent,
@@ -147,33 +149,33 @@ class _PoseDetectorViewState extends State<shrug_left> {
             ),
           ),
         ),
-        Positioned(
-          //計時器UI
-          bottom: 10,
-          left: -10,
-          child: Container(
-            padding: EdgeInsets.all(10),
-            decoration: new BoxDecoration(
-              color: Color.fromARGB(250, 65, 64, 64),
-              borderRadius: BorderRadius.horizontal(
-                left: Radius.circular(0),
-                right: Radius.circular(20),
-              ),
-            ),
-            width: Det.counterUIsize,
-            height: 90,
-            child: Text(
-              "秒數\n${Det.posetimecounter}/${Det.posetimeTarget}",
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                fontSize: 25,
-                color: Color.fromARGB(250, 255, 190, 52),
-                height: 1.2,
-                inherit: false,
-              ),
-            ),
-          ),
-        ),
+        // Positioned(
+        //   //計時器UI
+        //   bottom: 10,
+        //   left: -10,
+        //   child: Container(
+        //     padding: EdgeInsets.all(10),
+        //     decoration: new BoxDecoration(
+        //       color: Color.fromARGB(250, 65, 64, 64),
+        //       borderRadius: BorderRadius.horizontal(
+        //         left: Radius.circular(0),
+        //         right: Radius.circular(20),
+        //       ),
+        //     ),
+        //     width: Det.counterUIsize,
+        //     height: 90,
+        //     child: Text(
+        //       "秒數\n${Det.posetimecounter}/${Det.posetimeTarget}",
+        //       textAlign: TextAlign.center,
+        //       style: TextStyle(
+        //         fontSize: 25,
+        //         color: Color.fromARGB(250, 255, 190, 52),
+        //         height: 1.2,
+        //         inherit: false,
+        //       ),
+        //     ),
+        //   ),
+        // ),
         Positioned(//提醒視窗
           bottom: 100,
           child: Container(
@@ -232,11 +234,11 @@ class _PoseDetectorViewState extends State<shrug_left> {
   }
 }
 
-class Detector_shrug_left {
+class Detector_bath_right {
   int posetimecounter = 0; //復健動作持續秒數
   int posetimeTarget = 5; //復健動作持續秒數目標
   int posecounter = 0; //復健動作實作次數
-  int poseTarget = 10; //目標次數設定
+  int poseTarget = 20; //目標次數設定
   bool startdDetector = false; //偵測
   bool endDetector = false; //跳轉
   bool DetectorED = false;
@@ -252,9 +254,10 @@ class Detector_shrug_left {
   double Targetwidth = 0;
   double Targetheight = 0;
   double counterUIsize = 0;//開始後UI介面
-  double fakepreson = 450;//虛擬假人
-  String orderText = "請提起左肩";//目標提醒
+  double fakepreson = 0;//虛擬假人
+  String orderText = "請擦拭右胸";//目標提醒
   String mathText = "";//倒數文字
+  bool right_Chest = true;
 
   void startd(){//倒數計時
       int counter = 5;
@@ -278,7 +281,7 @@ class Detector_shrug_left {
     //開始辨識
     this.startdDetector = true;
     print("startdDetector be true");
-    setStandpoint();
+    //setStandpoint();
     settimer();
     remindtextsize = 0;
     remindpaddingsize = 0;
@@ -290,39 +293,39 @@ class Detector_shrug_left {
 
   void poseDetector() {
     //偵測判定
-    if(distance(Standpoint_bodymind_x!, Standpoint_bodymind_y!,
-        (posedata[22]!+posedata[24]!)/2, (posedata[23]!+posedata[25]!)/2)>100&&this.startdDetector){//身體中點與標準點距離
-      this.orderText = "側傾過大";
-      return ;
-    }
     if (this.startdDetector) {
       DetectorED = true;
-      print(posedata[23]!);
-      print(this.Standpoint_Y!);
-      this.orderText = "抬起左肩";
-      if (this.posetimecounter == this.posetimeTarget) {
-        //秒數達成
-        this.startdDetector = false;
-        this.posecounter++;
-        this.posetimecounter = 0;
-        this.orderText = "達標!";
+      if(this.right_Chest){
+        this.orderText = "請擦拭右胸";
+        if(distance(posedata[32]!, posedata[33]!, posedata[24]!, posedata[25]!)<150){//手腕與肩膀距離
+          this.startdDetector = false;
+          this.orderText = "達標";
+          this.posecounter++;
+          this.right_Chest = false;
+        }
+      }else{
+        this.orderText = "請擦拭左胸";
+        if(distance(posedata[32]!, posedata[33]!, posedata[22]!, posedata[23]!)<150){//手腕與肩膀距離
+          this.startdDetector = false;
+          this.orderText = "達標";
+          this.posecounter++;
+          this.right_Chest = true;
+        }
       }
-      if (posedata[23]! < (this.Standpoint_Y!) && this.startdDetector) {//肩膀高於標準點
-        //每秒目標
-        this.posetimecounter++;
-        print(this.posetimecounter);
-        this.orderText = "請保持住!";
-      } else {
-        //沒有保持
-        this.posetimecounter = 0;
-      }
-    } else if (DetectorED) {
+    }else if (DetectorED) {
       //預防空值被訪問
-      if (posedata[23]! > (this.Standpoint_Y!)) {
-        //確認復歸
-        this.startdDetector = true;
-      } else {
-        this.orderText = "請復歸動作";
+      if(!this.right_Chest){
+        this.orderText = "請擦拭左胸";
+        if (distance(posedata[32]!, posedata[33]!, posedata[24]!, posedata[25]!)>150) {//手腕與肩膀距離
+          //確認復歸
+          this.startdDetector = true;
+        }
+      }else{
+        this.orderText = "請擦拭右胸";
+        if (distance(posedata[32]!, posedata[33]!, posedata[22]!, posedata[23]!)>150) {//手腕與肩膀距離
+          //確認復歸
+          this.startdDetector = true;
+        }
       }
     }
   }
@@ -344,6 +347,17 @@ class Detector_shrug_left {
 
   double distance(double x1,double y1,double x2,double y2){
     return sqrt(pow((x1-x2).abs(),2)+pow((y1-y2).abs(),2));
+  }
+
+  double angle(double x1,double y1,double x2,double y2,double x3,double y3){
+    double vx1= x1-x2;
+    double vy1= y1-y2;
+    double vx2= x3-x2;
+    double vy2= y3-y2;
+    double porduct = vx1*vx2+vy1*vy2;
+    double result = acos(porduct/(distance(x1, y1, x2, y2)*distance(x3, y3, x2, y2)))*57.3;
+    print(result);
+    return result;
   }
 
   void settimer(){

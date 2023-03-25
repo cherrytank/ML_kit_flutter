@@ -301,9 +301,9 @@ class Detector_hold_hands_right {
         this.posetimecounter = 0;
         this.orderText = "達標!";
       }
-      if (distance(posedata[32]!, posedata[33]!, posedata[48]!, posedata[49]!)>100
-          &&angle(posedata[24]!,posedata[25]!,posedata[28]!,posedata[29]!,posedata[32]!,posedata[33]!)>130
-
+      if (distance(posedata[32]!, posedata[33]!, posedata[48]!, posedata[49]!)>100//離開大腿
+          &&angle(posedata[24]!,posedata[25]!,posedata[28]!,posedata[29]!,posedata[32]!,posedata[33]!)>130//手臂角度必須直
+          &&distance(posedata[32]!, posedata[33]!, posedata[30]!, posedata[31]!)<200//雙手交疊
           &&this.startdDetector) {
         //每秒目標
         this.posetimecounter++;

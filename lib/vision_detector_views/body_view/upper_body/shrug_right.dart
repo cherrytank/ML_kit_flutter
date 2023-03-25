@@ -291,7 +291,7 @@ class Detector_shrug_right {
   void poseDetector() {
     //偵測判定
     if(distance(Standpoint_bodymind_x!, Standpoint_bodymind_y!,
-        (posedata[22]!+posedata[24]!)/2, (posedata[23]!+posedata[25]!)/2)>100&&this.startdDetector){
+        (posedata[22]!+posedata[24]!)/2, (posedata[23]!+posedata[25]!)/2)>100&&this.startdDetector){//身體中點與標準點距離
       this.orderText = "側傾過大";
       return ;
     }
@@ -307,7 +307,7 @@ class Detector_shrug_right {
         this.posetimecounter = 0;
         this.orderText = "達標!";
       }
-      if (posedata[25]! < (this.Standpoint_Y!) && this.startdDetector) {
+      if (posedata[25]! < (this.Standpoint_Y!) && this.startdDetector) {//肩膀高於標準點
         //每秒目標
         this.posetimecounter++;
         print(this.posetimecounter);

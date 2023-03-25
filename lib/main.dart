@@ -95,6 +95,36 @@ class Home extends StatelessWidget {
                           );
                         },
                       ),
+                      SizedBox(height: 10,),
+                      ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                            minimumSize: Size(350,50),
+                            padding: EdgeInsets.all(10.0),
+                            textStyle: const TextStyle(fontSize: 30)
+                        ),
+                        child: Text("wipe_table_right"),
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            new MaterialPageRoute(builder: (context) => new wipe_table_right()),
+                          );
+                        },
+                      ),
+                      SizedBox(height: 10,),
+                      ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                            minimumSize: Size(350,50),
+                            padding: EdgeInsets.all(10.0),
+                            textStyle: const TextStyle(fontSize: 30)
+                        ),
+                        child: Text("bath_right"),
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            new MaterialPageRoute(builder: (context) => new bath_right()),
+                          );
+                        },
+                      ),
                     ],
                   ),
             ),

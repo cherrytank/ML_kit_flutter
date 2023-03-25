@@ -300,8 +300,8 @@ class Detector_crutch_right {
         this.posetimecounter = 0;
         this.orderText = "達標!";
       }
-      if (angle(posedata[24]!,posedata[25]!,posedata[28]!,posedata[29]!,posedata[32]!,posedata[33]!)>130
-          && posedata[33]!<(posedata[49]!)
+      if (angle(posedata[24]!,posedata[25]!,posedata[28]!,posedata[29]!,posedata[32]!,posedata[33]!)>130//手臂角度需大於
+          && posedata[33]!<(posedata[49]!)//手部須高於臀部
         &&this.startdDetector) {
         //每秒目標
         this.posetimecounter++;
