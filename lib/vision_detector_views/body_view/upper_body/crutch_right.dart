@@ -5,7 +5,7 @@ import 'package:flutter_animate/flutter_animate.dart';
 import 'dart:math';
 import '../assembly.dart';
 
-//右拐杖復健頁面
+
 class crutch_right extends StatefulWidget {
   @override
   State<StatefulWidget> createState() => _PoseDetectorViewState();

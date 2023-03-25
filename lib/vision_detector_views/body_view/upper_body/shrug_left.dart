@@ -5,7 +5,7 @@ import 'package:flutter_animate/flutter_animate.dart';
 import 'dart:math';
 import '../assembly.dart';
 
-//左肩聳肩復健頁面
+
 class shrug_left extends StatefulWidget {
   @override
   State<StatefulWidget> createState() => _PoseDetectorViewState();

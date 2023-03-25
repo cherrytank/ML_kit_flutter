@@ -6,19 +6,19 @@ import 'dart:math';
 import '../assembly.dart';
 
 
-class bath_right extends StatefulWidget {
+class heads_raise_right extends StatefulWidget {
   @override
   State<StatefulWidget> createState() => _PoseDetectorViewState();
 }
 
-class _PoseDetectorViewState extends State<bath_right> {
+class _PoseDetectorViewState extends State<heads_raise_right> {
   final PoseDetector _poseDetector =
       PoseDetector(options: PoseDetectorOptions());
   bool _canProcess = true;
   bool _isBusy = false;
   CustomPaint? _customPaint;
   String? _text;
-  Detector_bath_right Det = new Detector_bath_right();//建立偵測系統
+  Detector_heads_raise_right Det = new Detector_heads_raise_right();//建立偵測系統
   @override
   void dispose() async {
     _canProcess = false;
@@ -85,7 +85,7 @@ class _PoseDetectorViewState extends State<bath_right> {
               borderRadius: BorderRadius.all(Radius.circular(20.0)),
             ),
             child: Text(
-              "請將上半身拍攝於畫面內\n並維持鏡頭穩定\n準備完成請按「Start」",
+              "請將全身攝於畫面內並微向左\n並維持鏡頭穩定\n準備完成請按「Start」",
               textAlign: TextAlign.center,
               style: TextStyle(
                 backgroundColor: Colors.transparent,
@@ -147,33 +147,33 @@ class _PoseDetectorViewState extends State<bath_right> {
             ),
           ),
         ),
-        // Positioned(
-        //   //計時器UI
-        //   bottom: 10,
-        //   left: -10,
-        //   child: Container(
-        //     padding: EdgeInsets.all(10),
-        //     decoration: new BoxDecoration(
-        //       color: Color.fromARGB(250, 65, 64, 64),
-        //       borderRadius: BorderRadius.horizontal(
-        //         left: Radius.circular(0),
-        //         right: Radius.circular(20),
-        //       ),
-        //     ),
-        //     width: Det.counterUIsize,
-        //     height: 90,
-        //     child: Text(
-        //       "秒數\n${Det.posetimecounter}/${Det.posetimeTarget}",
-        //       textAlign: TextAlign.center,
-        //       style: TextStyle(
-        //         fontSize: 25,
-        //         color: Color.fromARGB(250, 255, 190, 52),
-        //         height: 1.2,
-        //         inherit: false,
-        //       ),
-        //     ),
-        //   ),
-        // ),
+        Positioned(
+          //計時器UI
+          bottom: 10,
+          left: -10,
+          child: Container(
+            padding: EdgeInsets.all(10),
+            decoration: new BoxDecoration(
+              color: Color.fromARGB(250, 65, 64, 64),
+              borderRadius: BorderRadius.horizontal(
+                left: Radius.circular(0),
+                right: Radius.circular(20),
+              ),
+            ),
+            width: Det.counterUIsize,
+            height: 90,
+            child: Text(
+              "秒數\n${Det.posetimecounter}/${Det.posetimeTarget}",
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                fontSize: 25,
+                color: Color.fromARGB(250, 255, 190, 52),
+                height: 1.2,
+                inherit: false,
+              ),
+            ),
+          ),
+        ),
         Positioned(//提醒視窗
           bottom: 100,
           child: Container(
@@ -198,7 +198,8 @@ class _PoseDetectorViewState extends State<bath_right> {
               ),
             ),
           ),
-        ).animate(
+        )
+            .animate(
                 onPlay: (controller) => controller.repeat())
             .scaleXY(end: 0.2,duration: 2.seconds),
 
@@ -231,11 +232,11 @@ class _PoseDetectorViewState extends State<bath_right> {
   }
 }
 
-class Detector_bath_right {
+class Detector_heads_raise_right {
   int posetimecounter = 0; //復健動作持續秒數
   int posetimeTarget = 5; //復健動作持續秒數目標
   int posecounter = 0; //復健動作實作次數
-  int poseTarget = 20; //目標次數設定
+  int poseTarget = 10; //目標次數設定
   bool startdDetector = false; //偵測
   bool endDetector = false; //跳轉
   bool DetectorED = false;
@@ -252,9 +253,8 @@ class Detector_bath_right {
   double Targetheight = 0;
   double counterUIsize = 0;//開始後UI介面
   double fakepreson = 0;//虛擬假人
-  String orderText = "請擦拭右胸";//目標提醒
+  String orderText = "";//目標提醒
   String mathText = "";//倒數文字
-  bool right_Chest = true;
 
   void startd(){//倒數計時
       int counter = 5;
@@ -278,7 +278,7 @@ class Detector_bath_right {
     //開始辨識
     this.startdDetector = true;
     print("startdDetector be true");
-    //setStandpoint();
+    setStandpoint();
     settimer();
     remindtextsize = 0;
     remindpaddingsize = 0;
@@ -292,37 +292,41 @@ class Detector_bath_right {
     //偵測判定
     if (this.startdDetector) {
       DetectorED = true;
-      if(this.right_Chest){
-        this.orderText = "請擦拭右胸";
-        if(distance(posedata[32]!, posedata[33]!, posedata[24]!, posedata[25]!)<150){//手腕與肩膀距離
-          this.startdDetector = false;
-          this.orderText = "達標";
-          this.posecounter++;
-          this.right_Chest = false;
-        }
-      }else{
-        this.orderText = "請擦拭左胸";
-        if(distance(posedata[32]!, posedata[33]!, posedata[22]!, posedata[23]!)<150){//手腕與肩膀距離
-          this.startdDetector = false;
-          this.orderText = "達標";
-          this.posecounter++;
-          this.right_Chest = true;
-        }
+      this.orderText = "請前抬舉雙手";
+      if (this.posetimecounter == this.posetimeTarget) {
+        //秒數達成
+        this.startdDetector = false;
+        this.posecounter++;
+        this.posetimecounter = 0;
+        this.orderText = "達標!";
       }
-    }else if (DetectorED) {
+      if(angle(posedata[24]!,posedata[25]!,posedata[28]!,posedata[29]!,posedata[32]!,posedata[33]!)<130){
+        this.orderText = "手請伸直";
+        return;
+      }
+      if(distance(posedata[32]!, posedata[33]!, posedata[30]!, posedata[31]!)>200){
+        this.orderText = "請雙手握合";
+        return;
+      }
+      if (angle(posedata[24]!,posedata[25]!,posedata[28]!,posedata[29]!,posedata[32]!,posedata[33]!)>130//手臂角度需大於
+          &&distance(posedata[32]!, posedata[33]!, posedata[30]!, posedata[31]!)<200 //雙手合併
+          && posedata[33]!<(posedata[25]!+100)//手部須高於腰
+        &&this.startdDetector) {
+        //每秒目標
+        this.posetimecounter++;
+        print(this.posetimecounter);
+        this.orderText = "請保持住!";
+      } else {
+        //沒有保持
+        this.posetimecounter = 0;
+      }
+    } else if (DetectorED) {
       //預防空值被訪問
-      if(!this.right_Chest){
-        this.orderText = "請擦拭左胸";
-        if (distance(posedata[32]!, posedata[33]!, posedata[24]!, posedata[25]!)>150) {//手腕與肩膀距離
-          //確認復歸
-          this.startdDetector = true;
-        }
-      }else{
-        this.orderText = "請擦拭右胸";
-        if (distance(posedata[32]!, posedata[33]!, posedata[22]!, posedata[23]!)>150) {//手腕與肩膀距離
-          //確認復歸
-          this.startdDetector = true;
-        }
+      if (posedata[33]!>(posedata[25]!+50)) {
+        //確認復歸
+        this.startdDetector = true;
+      } else {
+        this.orderText = "請放下手臂";
       }
     }
   }

@@ -29,13 +29,13 @@ class Home extends StatelessWidget {
         centerTitle: true,
         elevation: 0,
       ),
-      body: Center(
+      body: Container(
             child: Padding(
               padding: EdgeInsets.symmetric(horizontal: 16),
               child:
-                  ExpansionTile(
-                    title: const Text('APIs'),
+                  ListView(
                     children: [
+                      SizedBox(height: 10,),
                       ElevatedButton(
                         style: ElevatedButton.styleFrom(
                           minimumSize: Size(350,50),
@@ -122,6 +122,66 @@ class Home extends StatelessWidget {
                           Navigator.push(
                             context,
                             new MaterialPageRoute(builder: (context) => new bath_right()),
+                          );
+                        },
+                      ),
+                      SizedBox(height: 10,),
+                      ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                            minimumSize: Size(350,50),
+                            padding: EdgeInsets.all(10.0),
+                            textStyle: const TextStyle(fontSize: 30)
+                        ),
+                        child: Text("forward_shoulder_right"),
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            new MaterialPageRoute(builder: (context) => new forward_shoulder_right()),
+                          );
+                        },
+                      ),
+                      SizedBox(height: 10,),
+                      ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                            minimumSize: Size(350,50),
+                            padding: EdgeInsets.all(10.0),
+                            textStyle: const TextStyle(fontSize: 30)
+                        ),
+                        child: Text("forward_elbow_right"),
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            new MaterialPageRoute(builder: (context) => new forward_elbow_right()),
+                          );
+                        },
+                      ),
+                      SizedBox(height: 10,),
+                      ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                            minimumSize: Size(350,50),
+                            padding: EdgeInsets.all(10.0),
+                            textStyle: const TextStyle(fontSize: 30)
+                        ),
+                        child: Text("shoulder_raise_right"),
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            new MaterialPageRoute(builder: (context) => new shoulder_raise_right()),
+                          );
+                        },
+                      ),
+                      SizedBox(height: 10,),
+                      ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                            minimumSize: Size(350,50),
+                            padding: EdgeInsets.all(10.0),
+                            textStyle: const TextStyle(fontSize: 30)
+                        ),
+                        child: Text("heads_raise_right"),
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            new MaterialPageRoute(builder: (context) => new heads_raise_right()),
                           );
                         },
                       ),

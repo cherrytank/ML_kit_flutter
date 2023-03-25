@@ -5,7 +5,7 @@ import 'package:flutter_animate/flutter_animate.dart';
 import 'dart:math';
 import '../assembly.dart';
 
-//右拐杖復健頁面
+
 class wipe_table_right extends StatefulWidget {
   @override
   State<StatefulWidget> createState() => _PoseDetectorViewState();
@@ -147,33 +147,33 @@ class _PoseDetectorViewState extends State<wipe_table_right> {
             ),
           ),
         ),
-        Positioned(
-          //計時器UI
-          bottom: 10,
-          left: -10,
-          child: Container(
-            padding: EdgeInsets.all(10),
-            decoration: new BoxDecoration(
-              color: Color.fromARGB(250, 65, 64, 64),
-              borderRadius: BorderRadius.horizontal(
-                left: Radius.circular(0),
-                right: Radius.circular(20),
-              ),
-            ),
-            width: Det.counterUIsize,
-            height: 90,
-            child: Text(
-              "秒數\n${Det.posetimecounter}/${Det.posetimeTarget}",
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                fontSize: 25,
-                color: Color.fromARGB(250, 255, 190, 52),
-                height: 1.2,
-                inherit: false,
-              ),
-            ),
-          ),
-        ),
+        // Positioned(
+        //   //計時器UI
+        //   bottom: 10,
+        //   left: -10,
+        //   child: Container(
+        //     padding: EdgeInsets.all(10),
+        //     decoration: new BoxDecoration(
+        //       color: Color.fromARGB(250, 65, 64, 64),
+        //       borderRadius: BorderRadius.horizontal(
+        //         left: Radius.circular(0),
+        //         right: Radius.circular(20),
+        //       ),
+        //     ),
+        //     width: Det.counterUIsize,
+        //     height: 90,
+        //     child: Text(
+        //       "秒數\n${Det.posetimecounter}/${Det.posetimeTarget}",
+        //       textAlign: TextAlign.center,
+        //       style: TextStyle(
+        //         fontSize: 25,
+        //         color: Color.fromARGB(250, 255, 190, 52),
+        //         height: 1.2,
+        //         inherit: false,
+        //       ),
+        //     ),
+        //   ),
+        // ),
         Positioned(//提醒視窗
           bottom: 100,
           child: Container(
@@ -253,7 +253,7 @@ class Detector_wipe_table_right {
   double Targetheight = 0;
   double counterUIsize = 0;//開始後UI介面
   double fakepreson = 0;//虛擬假人
-  String orderText = "請前伸右臂";//目標提醒
+  String orderText = "";//目標提醒
   String mathText = "";//倒數文字
   bool right_side= true;
 
@@ -296,7 +296,8 @@ class Detector_wipe_table_right {
       DetectorED = true;
       if(this.right_side){
         this.orderText = "請往右擦拭";
-        if(distance(posedata[32]!, posedata[33]!, posedata[24]!, posedata[25]!)<100){
+        if(distance(posedata[32]!, posedata[33]!, posedata[30]!, posedata[31]!)<200 //雙手合併
+        &&posedata[32]!>500 && posedata[33]!< posedata[49]!){ //高於腰 && 靠近邊緣
           this.startdDetector = false;
           this.orderText = "達標";
           this.posecounter++;
@@ -304,7 +305,8 @@ class Detector_wipe_table_right {
         }
       }else{
         this.orderText = "請往左擦拭";
-        if(distance(posedata[32]!, posedata[33]!, posedata[22]!, posedata[23]!)<100){
+        if(distance(posedata[32]!, posedata[33]!, posedata[30]!, posedata[31]!)<200 //雙手合併
+            &&posedata[32]!<200 && posedata[33]!< posedata[49]!){ //高於腰 && 靠近邊緣
           this.startdDetector = false;
           this.orderText = "達標";
           this.posecounter++;
@@ -315,13 +317,13 @@ class Detector_wipe_table_right {
       //預防空值被訪問
       if(!this.right_side){
         this.orderText = "請往左擦拭";
-        if (distance(posedata[32]!, posedata[33]!, posedata[24]!, posedata[25]!)>100) {
+        if (posedata[32]!<500) {
           //確認復歸
           this.startdDetector = true;
         }
       }else{
         this.orderText = "請往右擦拭";
-        if (distance(posedata[32]!, posedata[33]!, posedata[22]!, posedata[23]!)>100) {
+        if (posedata[32]!>100) {
           //確認復歸
           this.startdDetector = true;
         }

@@ -4,8 +4,10 @@ export 'body_view/upper_body/crutch_right.dart';
 export 'body_view/upper_body/hold_hands_right.dart';
 export 'body_view/upper_body/bath_right.dart';
 export 'body_view/upper_body/wipe_table_right.dart';
-
-
+export 'body_view/upper_body_Advanced/forward_shoulder_right.dart';
+export 'body_view/upper_body_Advanced/forward_elbow_right.dart';
+export 'body_view/upper_body_Advanced/shoulder_raise_right.dart';
+export 'body_view/upper_body_Advanced/heads_raise_right.dart';
 /*
 動作中英對照表(_right ,_left )
   初階上肢
@@ -14,15 +16,15 @@ export 'body_view/upper_body/wipe_table_right.dart';
     wipe_table(擦桌動作)
     crutch(拐杖撐手) done
     wrist(手腕動作)//須改
-    bath(擦澡動作)
+    bath(擦澡動作) done
 
   進階上肢
-    肩膀前舉
-    手肘前伸
-    肩膀側舉
-    雙手抬舉
-    上翹及下彎[待換]
-    擦毛巾
+    forward_shoulder(肩膀前舉)
+    forward_elbow(手肘前伸)
+    shoulder_raise(肩膀側舉)
+    heads_raise(雙手抬舉)
+    (上翹及下彎)[待換]
+    (擦毛巾)
 
   初階下肢
     大腿伸彎
