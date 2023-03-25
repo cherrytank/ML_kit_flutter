@@ -303,6 +303,7 @@ class Detector_hold_hands_right {
       }
       if (distance(posedata[32]!, posedata[33]!, posedata[48]!, posedata[49]!)>100
           &&angle(posedata[24]!,posedata[25]!,posedata[28]!,posedata[29]!,posedata[32]!,posedata[33]!)>130
+
           &&this.startdDetector) {
         //每秒目標
         this.posetimecounter++;
