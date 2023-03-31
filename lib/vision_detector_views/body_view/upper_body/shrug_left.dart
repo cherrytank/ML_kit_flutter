@@ -48,7 +48,7 @@ class _PoseDetectorViewState extends State<shrug_left> {
             processImage(inputImage);
           },
         ),
-        if(!Det.startdDetector)... [
+        if(!Det.changeUI)... [
           // Positioned(
           //   //人形立牌
           //   top: 120,
