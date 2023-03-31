@@ -48,13 +48,14 @@ class _PoseDetectorViewState extends State<shoulder_raise_right> {
             processImage(inputImage);
           },
         ),
-        Positioned(
-          //人形立牌
-          top: 120,
-          child:Image(
-            height: Det.fakepreson,
-            image: AssetImage("assets/picture/b.png"),)
-          ).animate().slide(duration: 500.ms),
+        if(!Det.changeUI)... [
+        // Positioned(
+        //   //人形立牌
+        //   top: 120,
+        //   child:Image(
+        //     height: 0,
+        //     image: AssetImage("assets/picture/b.png"),)
+        //   ).animate().slide(duration: 500.ms),
         Positioned(
           //倒數計時
             top: 180,
@@ -78,7 +79,7 @@ class _PoseDetectorViewState extends State<shoulder_raise_right> {
           bottom: 100.0,
           child: Container(
             width: 1000,
-            padding: EdgeInsets.all(Det.remindpaddingsize),
+            padding: EdgeInsets.all(10),
             alignment: Alignment.center,
             decoration: new BoxDecoration(
               color: Color.fromARGB(132, 255, 255, 255),
@@ -89,7 +90,7 @@ class _PoseDetectorViewState extends State<shoulder_raise_right> {
               textAlign: TextAlign.center,
               style: TextStyle(
                 backgroundColor: Colors.transparent,
-                fontSize: Det.remindtextsize,
+                fontSize: 25,
                 color: Colors.black,
                 height: 1.2,
                 inherit: false,
@@ -97,11 +98,12 @@ class _PoseDetectorViewState extends State<shoulder_raise_right> {
             ),
           ),
         ).animate().slide(duration: 500.ms),
+        if(Det.buttom_false)
         Positioned(
             //復健按鈕
             bottom: 15.0,
             child: Container(
-              height: Det.buttomsize,
+              height: 80,
               child: ElevatedButton(
                 style: ElevatedButton.styleFrom(
                   shape: RoundedRectangleBorder(
@@ -112,7 +114,7 @@ class _PoseDetectorViewState extends State<shoulder_raise_right> {
                 ),
                 child: Text("Start!",
                     style: TextStyle(
-                      fontSize: Det.buttomtextsize,
+                      fontSize: 35,
                       color: Colors.white,
                     )),
                 onPressed: () {
@@ -120,6 +122,7 @@ class _PoseDetectorViewState extends State<shoulder_raise_right> {
                 },
               ),
             )).animate().slide(duration: 500.ms),
+        ]else...[
         Positioned(
           //計數器UI
           bottom: 10,
@@ -133,7 +136,7 @@ class _PoseDetectorViewState extends State<shoulder_raise_right> {
                 right: Radius.circular(0),
               ),
             ),
-            width: Det.counterUIsize,
+            width: 100,
             height: 90,
             child: Text(
               "次數\n${Det.posecounter}/${Det.poseTarget}",
@@ -160,7 +163,7 @@ class _PoseDetectorViewState extends State<shoulder_raise_right> {
                 right: Radius.circular(20),
               ),
             ),
-            width: Det.counterUIsize,
+            width: 100,
             height: 90,
             child: Text(
               "秒數\n${Det.posetimecounter}/${Det.posetimeTarget}",
@@ -186,7 +189,7 @@ class _PoseDetectorViewState extends State<shoulder_raise_right> {
               ),
             ),
             width: 220,
-            height: Det.counterUIsize,
+            height: 100,
             child: Text(
               "${Det.orderText}",
               textAlign: TextAlign.center,
@@ -202,7 +205,7 @@ class _PoseDetectorViewState extends State<shoulder_raise_right> {
             .animate(
                 onPlay: (controller) => controller.repeat())
             .scaleXY(end: 0.2,duration: 2.seconds),
-
+        ]
       ],
     );
   }
@@ -245,21 +248,13 @@ class Detector_shoulder_raise_right {
   double? Standpoint_Y = 0;
   double? Standpoint_bodymind_x = 0;//身體終點
   double? Standpoint_bodymind_y = 0;//身體終點
-  double remindtextsize = 25;//提醒視窗
-  double remindpaddingsize = 10;//提醒視窗
-  double buttomtextsize = 35;//開始復健按鈕
-  double buttomsize = 80;//開始復健按鈕
-  double Targetwidth = 0;
-  double Targetheight = 0;
-  double counterUIsize = 0;//開始後UI介面
-  double fakepreson = 0;//虛擬假人
   String orderText = "";//目標提醒
   String mathText = "";//倒數文字
-
+  bool buttom_false = true;//按下按鈕消失
+  bool changeUI = false;
   void startd(){//倒數計時
       int counter = 5;
-      buttomtextsize = 0;
-      buttomsize = 0;
+      buttom_false = false;
       Timer.periodic(//觸發偵測timer
         const Duration(seconds: 1),
             (timer) {
@@ -276,16 +271,12 @@ class Detector_shoulder_raise_right {
 
   void startD() {
     //開始辨識
+    this.changeUI = true;
     this.startdDetector = true;
     print("startdDetector be true");
     setStandpoint();
     settimer();
-    remindtextsize = 0;
-    remindpaddingsize = 0;
-    counterUIsize = 100;
-    Targetwidth = 360;
-    Targetheight = 110;
-    fakepreson = 0;
+
   }
 
   void poseDetector() {
