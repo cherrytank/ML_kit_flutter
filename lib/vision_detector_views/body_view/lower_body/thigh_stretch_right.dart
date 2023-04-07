@@ -6,19 +6,19 @@ import 'dart:math';
 import '../assembly.dart';
 
 
-class forward_elbow_right extends StatefulWidget {
+class thigh_stretch_right extends StatefulWidget {
   @override
   State<StatefulWidget> createState() => _PoseDetectorViewState();
 }
 
-class _PoseDetectorViewState extends State<forward_elbow_right> {
+class _PoseDetectorViewState extends State<thigh_stretch_right> {
   final PoseDetector _poseDetector =
       PoseDetector(options: PoseDetectorOptions());
   bool _canProcess = true;
   bool _isBusy = false;
   CustomPaint? _customPaint;
   String? _text;
-  Detector_forward_elbow_right Det = new Detector_forward_elbow_right();//建立偵測系統
+  Detector_thigh_stretch_right Det = new Detector_thigh_stretch_right();//建立偵測系統
   @override
   void dispose() async {
     _canProcess = false;
@@ -235,7 +235,7 @@ class _PoseDetectorViewState extends State<forward_elbow_right> {
   }
 }
 
-class Detector_forward_elbow_right {
+class Detector_thigh_stretch_right {
   int posetimecounter = 0; //復健動作持續秒數
   int posetimeTarget = 5; //復健動作持續秒數目標
   int posecounter = 0; //復健動作實作次數
@@ -283,7 +283,7 @@ class Detector_forward_elbow_right {
     //偵測判定
     if (this.startdDetector) {
       DetectorED = true;
-      this.orderText = "請前伸雙手";
+      this.orderText = "請升高膝蓋";
       if (this.posetimecounter == this.posetimeTarget) {
         //秒數達成
         this.startdDetector = false;
@@ -291,17 +291,7 @@ class Detector_forward_elbow_right {
         this.posetimecounter = 0;
         this.orderText = "達標!";
       }
-      if(angle(posedata[24]!,posedata[25]!,posedata[28]!,posedata[29]!,posedata[32]!,posedata[33]!)<130){
-        this.orderText = "手請伸直";
-        return;
-      }
-      if(distance(posedata[32]!, posedata[33]!, posedata[30]!, posedata[31]!)>200){
-        this.orderText = "請雙手握合";
-        return;
-      }
-      if (angle(posedata[24]!,posedata[25]!,posedata[28]!,posedata[29]!,posedata[32]!,posedata[33]!)>130//手臂角度需大於
-          &&distance(posedata[32]!, posedata[33]!, posedata[30]!, posedata[31]!)<200 //雙手合併
-          && posedata[33]!<(posedata[49]!)//手部須高於臀部
+      if (angle(posedata[48]!, posedata[49]!, posedata[52]!, posedata[53]!, posedata[56]!, posedata[57]!)<90 //膝蓋角度
         &&this.startdDetector) {
         //每秒目標
         this.posetimecounter++;
@@ -313,11 +303,13 @@ class Detector_forward_elbow_right {
       }
     } else if (DetectorED) {
       //預防空值被訪問
-      if (angle(posedata[24]!,posedata[25]!,posedata[28]!,posedata[29]!,posedata[32]!,posedata[33]!)<130) {
+      if (
+      angle(posedata[48]!, posedata[49]!, posedata[52]!, posedata[53]!, posedata[56]!, posedata[57]!)>150 //膝蓋角度
+      ) {
         //確認復歸
         this.startdDetector = true;
       } else {
-        this.orderText = "請縮回手臂";
+        this.orderText = "請放下腿";
       }
     }
   }

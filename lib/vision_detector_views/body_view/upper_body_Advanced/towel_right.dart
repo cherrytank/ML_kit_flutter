@@ -6,19 +6,19 @@ import 'dart:math';
 import '../assembly.dart';
 
 
-class forward_elbow_right extends StatefulWidget {
+class wipe_table_right extends StatefulWidget {
   @override
   State<StatefulWidget> createState() => _PoseDetectorViewState();
 }
 
-class _PoseDetectorViewState extends State<forward_elbow_right> {
+class _PoseDetectorViewState extends State<wipe_table_right> {
   final PoseDetector _poseDetector =
       PoseDetector(options: PoseDetectorOptions());
   bool _canProcess = true;
   bool _isBusy = false;
   CustomPaint? _customPaint;
   String? _text;
-  Detector_forward_elbow_right Det = new Detector_forward_elbow_right();//建立偵測系統
+  Detector_wipe_table_right Det = new Detector_wipe_table_right();//建立偵測系統
   @override
   void dispose() async {
     _canProcess = false;
@@ -51,15 +51,15 @@ class _PoseDetectorViewState extends State<forward_elbow_right> {
         if(!Det.changeUI)... [
           // Positioned(
           //   //人形立牌
-          //   top: 120,
-          //   child:Image(
-          //     height: 0,
-          //     image: AssetImage("assets/picture/b.png"),)
-          //   ).animate().slide(duration: 500.ms),
+          //     top: 120,
+          //     child: Image(
+          //       height: 0,
+          //       image: AssetImage("assets/picture/b.png"),)
+          // ).animate().slide(duration: 500.ms),
           Positioned(
             //倒數計時
               top: 180,
-              child:Container(
+              child: Container(
                 height: 120,
                 width: 100,
                 child: Text(
@@ -86,7 +86,7 @@ class _PoseDetectorViewState extends State<forward_elbow_right> {
                 borderRadius: BorderRadius.all(Radius.circular(20.0)),
               ),
               child: Text(
-                "請將全身拍攝於畫面內\n並維持鏡頭穩定\n準備完成請按「Start」",
+                "請將上半身拍攝於畫面內\n並維持鏡頭穩定\n準備完成請按「Start」",
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   backgroundColor: Colors.transparent,
@@ -99,112 +99,112 @@ class _PoseDetectorViewState extends State<forward_elbow_right> {
             ),
           ).animate().slide(duration: 500.ms),
           if(Det.buttom_false)
-            Positioned(
-              //復健按鈕
-                bottom: 15.0,
-                child: Container(
-                  height: 80,
-                  child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(50)),
-                      ),
-                      padding: EdgeInsets.all(15),
-                      backgroundColor: Color.fromARGB(250, 255, 190, 52),
+          Positioned(
+            //復健按鈕
+              bottom: 15.0,
+              child: Container(
+                height: 80,
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(50)),
                     ),
-                    child: Text("Start!",
-                        style: TextStyle(
-                          fontSize: 35,
-                          color: Colors.white,
-                        )),
-                    onPressed: () {
-                      Det.startd();
-                    },
+                    padding: EdgeInsets.all(15),
+                    backgroundColor: Color.fromARGB(250, 255, 190, 52),
                   ),
-                )).animate().slide(duration: 500.ms),
-        ]else...[
-          Positioned(
-            //計數器UI
-            bottom: 10,
-            right: -10,
-            child: Container(
-              padding: EdgeInsets.all(10),
-              decoration: new BoxDecoration(
-                color: Color.fromARGB(250, 65, 64, 64),
-                borderRadius: BorderRadius.horizontal(
-                  left: Radius.circular(20),
-                  right: Radius.circular(0),
+                  child: Text("Start!",
+                      style: TextStyle(
+                        fontSize: 35,
+                        color: Colors.white,
+                      )),
+                  onPressed: () {
+                    Det.startd();
+                  },
                 ),
-              ),
-              width: 100,
-              height: 90,
-              child: Text(
-                "次數\n${Det.posecounter}/${Det.poseTarget}",
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  fontSize: 25,
-                  color: Color.fromARGB(250, 255, 190, 52),
-                  height: 1.2,
-                  inherit: false,
+              )).animate().slide(duration: 500.ms),
+            ]else...[
+            Positioned(
+              //計數器UI
+              bottom: 10,
+              right: -10,
+              child: Container(
+                padding: EdgeInsets.all(10),
+                decoration: new BoxDecoration(
+                  color: Color.fromARGB(250, 65, 64, 64),
+                  borderRadius: BorderRadius.horizontal(
+                    left: Radius.circular(20),
+                    right: Radius.circular(0),
+                  ),
                 ),
-              ),
-            ),
-          ),
-          Positioned(
-            //計時器UI
-            bottom: 10,
-            left: -10,
-            child: Container(
-              padding: EdgeInsets.all(10),
-              decoration: new BoxDecoration(
-                color: Color.fromARGB(250, 65, 64, 64),
-                borderRadius: BorderRadius.horizontal(
-                  left: Radius.circular(0),
-                  right: Radius.circular(20),
-                ),
-              ),
-              width: 100,
-              height: 90,
-              child: Text(
-                "秒數\n${Det.posetimecounter}/${Det.posetimeTarget}",
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  fontSize: 25,
-                  color: Color.fromARGB(250, 255, 190, 52),
-                  height: 1.2,
-                  inherit: false,
+                width: 100,
+                height: 90,
+                child: Text(
+                  "次數\n${Det.posecounter}/${Det.poseTarget}",
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontSize: 25,
+                    color: Color.fromARGB(250, 255, 190, 52),
+                    height: 1.2,
+                    inherit: false,
+                  ),
                 ),
               ),
             ),
-          ),
-          Positioned(//提醒視窗
-            bottom: 100,
-            child: Container(
-              padding: EdgeInsets.all(30),
-              decoration: new BoxDecoration(
-                color: Color.fromARGB(218, 255, 190, 52),
-                borderRadius: BorderRadius.horizontal(
-                  left: Radius.circular(30),
-                  right: Radius.circular(30),
+            // Positioned(
+            //   //計時器UI
+            //   bottom: 10,
+            //   left: -10,
+            //   child: Container(
+            //     padding: EdgeInsets.all(10),
+            //     decoration: new BoxDecoration(
+            //       color: Color.fromARGB(250, 65, 64, 64),
+            //       borderRadius: BorderRadius.horizontal(
+            //         left: Radius.circular(0),
+            //         right: Radius.circular(20),
+            //       ),
+            //     ),
+            //     width: Det.counterUIsize,
+            //     height: 90,
+            //     child: Text(
+            //       "秒數\n${Det.posetimecounter}/${Det.posetimeTarget}",
+            //       textAlign: TextAlign.center,
+            //       style: TextStyle(
+            //         fontSize: 25,
+            //         color: Color.fromARGB(250, 255, 190, 52),
+            //         height: 1.2,
+            //         inherit: false,
+            //       ),
+            //     ),
+            //   ),
+            // ),
+            Positioned( //提醒視窗
+              bottom: 100,
+              child: Container(
+                padding: EdgeInsets.all(30),
+                decoration: new BoxDecoration(
+                  color: Color.fromARGB(218, 255, 190, 52),
+                  borderRadius: BorderRadius.horizontal(
+                    left: Radius.circular(30),
+                    right: Radius.circular(30),
+                  ),
+                ),
+                width: 220,
+                height: 100,
+                child: Text(
+                  "${Det.orderText}",
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontSize: 28,
+                    color: Colors.white,
+                    height: 1.2,
+                    inherit: false,
+                  ),
                 ),
               ),
-              width: 220,
-              height: 100,
-              child: Text(
-                "${Det.orderText}",
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  fontSize: 28,
-                  color: Colors.white,
-                  height: 1.2,
-                  inherit: false,
-                ),
-              ),
-            ),
-          )
-              .animate(
-              onPlay: (controller) => controller.repeat())
-              .scaleXY(end: 0.2,duration: 2.seconds),
+            )
+                .animate(
+                onPlay: (controller) => controller.repeat())
+                .scaleXY(end: 0.2, duration: 2.seconds),
         ]
       ],
     );
@@ -235,11 +235,11 @@ class _PoseDetectorViewState extends State<forward_elbow_right> {
   }
 }
 
-class Detector_forward_elbow_right {
+class Detector_wipe_table_right {
   int posetimecounter = 0; //復健動作持續秒數
   int posetimeTarget = 5; //復健動作持續秒數目標
   int posecounter = 0; //復健動作實作次數
-  int poseTarget = 10; //目標次數設定
+  int poseTarget = 20; //目標次數設定
   bool startdDetector = false; //偵測
   bool endDetector = false; //跳轉
   bool DetectorED = false;
@@ -250,12 +250,12 @@ class Detector_forward_elbow_right {
   double? Standpoint_bodymind_y = 0;//身體終點
   String orderText = "";//目標提醒
   String mathText = "";//倒數文字
+  bool right_side= true; //右邊開始
   bool buttom_false = true;//按下按鈕消失
   bool changeUI = false;
-
   void startd(){//倒數計時
+      this.buttom_false = false;
       int counter = 5;
-      buttom_false = false;
       Timer.periodic(//觸發偵測timer
         const Duration(seconds: 1),
             (timer) {
@@ -281,53 +281,52 @@ class Detector_forward_elbow_right {
 
   void poseDetector() {
     //偵測判定
+    print(posedata[32]!);
     if (this.startdDetector) {
       DetectorED = true;
-      this.orderText = "請前伸雙手";
-      if (this.posetimecounter == this.posetimeTarget) {
-        //秒數達成
-        this.startdDetector = false;
-        this.posecounter++;
-        this.posetimecounter = 0;
-        this.orderText = "達標!";
+      if(this.right_side){
+        this.orderText = "請往右擦拭";
+        if(distance(posedata[32]!, posedata[33]!, posedata[30]!, posedata[31]!)<200 //雙手合併
+        &&posedata[32]!>500 && posedata[33]!< posedata[49]!){ //高於腰 && 靠近邊緣
+          this.startdDetector = false;
+          this.orderText = "達標";
+          this.posecounter++;
+          this.right_side = false;
+        }
+      }else{
+        this.orderText = "請往左擦拭";
+        if(distance(posedata[32]!, posedata[33]!, posedata[30]!, posedata[31]!)<200 //雙手合併
+            &&posedata[32]!<200 && posedata[33]!< posedata[49]!){ //高於腰 && 靠近邊緣
+          this.startdDetector = false;
+          this.orderText = "達標";
+          this.posecounter++;
+          this.right_side = true;
+        }
       }
-      if(angle(posedata[24]!,posedata[25]!,posedata[28]!,posedata[29]!,posedata[32]!,posedata[33]!)<130){
-        this.orderText = "手請伸直";
-        return;
-      }
-      if(distance(posedata[32]!, posedata[33]!, posedata[30]!, posedata[31]!)>200){
-        this.orderText = "請雙手握合";
-        return;
-      }
-      if (angle(posedata[24]!,posedata[25]!,posedata[28]!,posedata[29]!,posedata[32]!,posedata[33]!)>130//手臂角度需大於
-          &&distance(posedata[32]!, posedata[33]!, posedata[30]!, posedata[31]!)<200 //雙手合併
-          && posedata[33]!<(posedata[49]!)//手部須高於臀部
-        &&this.startdDetector) {
-        //每秒目標
-        this.posetimecounter++;
-        print(this.posetimecounter);
-        this.orderText = "請保持住!";
-      } else {
-        //沒有保持
-        this.posetimecounter = 0;
-      }
-    } else if (DetectorED) {
+    }else if (DetectorED) {
       //預防空值被訪問
-      if (angle(posedata[24]!,posedata[25]!,posedata[28]!,posedata[29]!,posedata[32]!,posedata[33]!)<130) {
-        //確認復歸
-        this.startdDetector = true;
-      } else {
-        this.orderText = "請縮回手臂";
+      if(!this.right_side){
+        this.orderText = "請往左擦拭";
+        if (posedata[32]!<500) {
+          //確認復歸
+          this.startdDetector = true;
+        }
+      }else{
+        this.orderText = "請往右擦拭";
+        if (posedata[32]!>100) {
+          //確認復歸
+          this.startdDetector = true;
+        }
       }
     }
   }
 
   void setStandpoint() {
     //設定基準點(左上角為(0,0)向右下)
-    // this.Standpoint_X = posedata[22]! - 20;
-    // this.Standpoint_Y = posedata[23]! - 20;
-    // this.Standpoint_bodymind_x = (posedata[22]!+posedata[24]!)/2;
-    // this.Standpoint_bodymind_y = (posedata[23]!+posedata[25]!)/2;
+    this.Standpoint_X = posedata[22]! - 20;
+    this.Standpoint_Y = posedata[23]! - 20;
+    this.Standpoint_bodymind_x = (posedata[22]!+posedata[24]!)/2;
+    this.Standpoint_bodymind_y = (posedata[23]!+posedata[25]!)/2;
   }
 
   void posetargetdone() {
