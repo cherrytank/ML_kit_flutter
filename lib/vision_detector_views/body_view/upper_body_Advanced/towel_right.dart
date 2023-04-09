@@ -6,19 +6,19 @@ import 'dart:math';
 import '../assembly.dart';
 
 
-class wipe_table_right extends StatefulWidget {
+class towel_right extends StatefulWidget {
   @override
   State<StatefulWidget> createState() => _PoseDetectorViewState();
 }
 
-class _PoseDetectorViewState extends State<wipe_table_right> {
+class _PoseDetectorViewState extends State<towel_right> {
   final PoseDetector _poseDetector =
       PoseDetector(options: PoseDetectorOptions());
   bool _canProcess = true;
   bool _isBusy = false;
   CustomPaint? _customPaint;
   String? _text;
-  Detector_wipe_table_right Det = new Detector_wipe_table_right();//建立偵測系統
+  Detector_towel_right Det = new Detector_towel_right();//建立偵測系統
   @override
   void dispose() async {
     _canProcess = false;
@@ -235,11 +235,11 @@ class _PoseDetectorViewState extends State<wipe_table_right> {
   }
 }
 
-class Detector_wipe_table_right {
+class Detector_towel_right {
   int posetimecounter = 0; //復健動作持續秒數
   int posetimeTarget = 5; //復健動作持續秒數目標
   int posecounter = 0; //復健動作實作次數
-  int poseTarget = 20; //目標次數設定
+  int poseTarget = 30; //目標次數設定
   bool startdDetector = false; //偵測
   bool endDetector = false; //跳轉
   bool DetectorED = false;
@@ -286,8 +286,8 @@ class Detector_wipe_table_right {
       DetectorED = true;
       if(this.right_side){
         this.orderText = "請往右擦拭";
-        if(distance(posedata[32]!, posedata[33]!, posedata[30]!, posedata[31]!)<200 //雙手合併
-        &&posedata[32]!>500 && posedata[33]!< posedata[49]!){ //高於腰 && 靠近邊緣
+        if(distance(posedata[30]!, posedata[31]!, posedata[22]!, posedata[23]!)<100 //身體中線距離
+        ){
           this.startdDetector = false;
           this.orderText = "達標";
           this.posecounter++;
@@ -295,8 +295,8 @@ class Detector_wipe_table_right {
         }
       }else{
         this.orderText = "請往左擦拭";
-        if(distance(posedata[32]!, posedata[33]!, posedata[30]!, posedata[31]!)<200 //雙手合併
-            &&posedata[32]!<200 && posedata[33]!< posedata[49]!){ //高於腰 && 靠近邊緣
+        if(distance(posedata[32]!, posedata[33]!, posedata[24]!, posedata[25]!)<100 //身體中線距離
+        ){
           this.startdDetector = false;
           this.orderText = "達標";
           this.posecounter++;

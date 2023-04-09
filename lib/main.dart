@@ -185,6 +185,112 @@ class Home extends StatelessWidget {
                           );
                         },
                       ),
+                      SizedBox(height: 10,),
+                      ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                            minimumSize: Size(350,50),
+                            padding: EdgeInsets.all(10.0),
+                            textStyle: const TextStyle(fontSize: 30)
+                        ),
+                        child: Text("towel_right"),
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            new MaterialPageRoute(builder: (context) => new towel_right()),
+                          );
+                        },
+                      ),
+                      SizedBox(height: 10,),
+                      ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                            minimumSize: Size(350,50),
+                            padding: EdgeInsets.all(10.0),
+                            textStyle: const TextStyle(fontSize: 30)
+                        ),
+                        child: Text("thigh_stretch_right"),
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            new MaterialPageRoute(builder: (context) => new thigh_stretch_right()),
+                          );
+                        },
+                      ),
+                      SizedBox(height: 10,),
+                      ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                            minimumSize: Size(350,50),
+                            padding: EdgeInsets.all(10.0),
+                            textStyle: const TextStyle(fontSize: 30)
+                        ),
+                        child: Text("raise_feet_right"),
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            new MaterialPageRoute(builder: (context) => new raise_feet_right()),
+                          );
+                        },
+                      ),
+                      SizedBox(height: 10,),
+                      ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                            minimumSize: Size(350,50),
+                            padding: EdgeInsets.all(10.0),
+                            textStyle: const TextStyle(fontSize: 30)
+                        ),
+                        child: Text("thigh_abduction_right"),
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            new MaterialPageRoute(builder: (context) => new thigh_abduction_right()),
+                          );
+                        },
+                      ),
+                      SizedBox(height: 10,),
+                      ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                            minimumSize: Size(350,50),
+                            padding: EdgeInsets.all(10.0),
+                            textStyle: const TextStyle(fontSize: 30)
+                        ),
+                        child: Text("bent_knees_right"),
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            new MaterialPageRoute(builder: (context) => new bent_knees_right()),
+                          );
+                        },
+                      ),
+                      SizedBox(height: 10,),
+                      ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                            minimumSize: Size(350,50),
+                            padding: EdgeInsets.all(10.0),
+                            textStyle: const TextStyle(fontSize: 30)
+                        ),
+                        child: Text("calf_knees_right"),
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            new MaterialPageRoute(builder: (context) => new calf_knees_right()),
+                          );
+                        },
+                      ),
+                      SizedBox(height: 10,),
+                      ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                            minimumSize: Size(350,50),
+                            padding: EdgeInsets.all(10.0),
+                            textStyle: const TextStyle(fontSize: 30)
+                        ),
+                        child: Text("lift_feet_right"),
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            new MaterialPageRoute(builder: (context) => new lift_feet_right()),
+                          );
+                        },
+                      ),
+
                     ],
                   ),
             ),

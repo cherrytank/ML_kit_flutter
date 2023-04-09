@@ -8,6 +8,7 @@ export 'body_view/upper_body_Advanced/forward_shoulder_right.dart';
 export 'body_view/upper_body_Advanced/forward_elbow_right.dart';
 export 'body_view/upper_body_Advanced/shoulder_raise_right.dart';
 export 'body_view/upper_body_Advanced/heads_raise_right.dart';
+export 'body_view/upper_body_Advanced/towel_right.dart';
 export 'body_view/lower_body/thigh_stretch_right.dart';
 export 'body_view/lower_body/raise_feet_right.dart';
 export 'body_view/lower_body/thigh_abduction_right.dart';

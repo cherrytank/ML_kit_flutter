@@ -291,8 +291,8 @@ class Detector_raise_feet_right {
         this.posetimecounter = 0;
         this.orderText = "達標!";
       }
-      if (angle(posedata[48]!, posedata[49]!, posedata[52]!, posedata[53]!, posedata[56]!, posedata[57]!)<90 //膝蓋角度
-        &&angle(posedata[24]!, posedata[25]!, posedata[48]!, posedata[49]!, posedata[52]!, posedata[53]!)<90 //身體與腿得角度
+      if (angle(posedata[48]!, posedata[49]!, posedata[52]!, posedata[53]!, posedata[56]!, posedata[57]!)<120 //膝蓋角度
+        &&angle(posedata[24]!, posedata[25]!, posedata[48]!, posedata[49]!, posedata[52]!, posedata[53]!)<120 //身體與腿得角度
         &&this.startdDetector) {
         //每秒目標
         this.posetimecounter++;

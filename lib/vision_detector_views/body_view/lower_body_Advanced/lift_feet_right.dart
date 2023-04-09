@@ -292,7 +292,7 @@ class Detector_lift_feet_right {
         this.orderText = "達標!";
       }
       if (distance(posedata[54]!, posedata[55]!, posedata[56]!, posedata[57]!)>200 //腳踝距離
-        &&posedata[56]!<posedata[24]!
+        &&posedata[56]!>posedata[24]!
         &&this.startdDetector) {
         //每秒目標
         this.posetimecounter++;
