@@ -1,6 +1,7 @@
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
-import 'vision_detector_views/detector_views.dart';
+import 'package:google_ml_kit_example/vision_detector_views/pose_transform.dart';
+import 'package:google_ml_kit_example/vision_detector_views/pose_view.dart';
 
 List<CameraDescription> cameras = [];
 
@@ -36,20 +37,20 @@ class Home extends StatelessWidget {
                   ListView(
                     children: [
                       SizedBox(height: 10,),
-                      ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          minimumSize: Size(350,50),
-                          padding: EdgeInsets.all(10.0),
-                          textStyle: const TextStyle(fontSize: 30)
-                        ),
-                        child: Text("shrug_left"),
-                        onPressed: () {
-                          Navigator.push(
-                            context,
-                            new MaterialPageRoute(builder: (context) => new shrug_left()),
-                          );
-                        },
-                      ),
+                      // ElevatedButton(
+                      //   style: ElevatedButton.styleFrom(
+                      //     minimumSize: Size(350,50),
+                      //     padding: EdgeInsets.all(10.0),
+                      //     textStyle: const TextStyle(fontSize: 30)
+                      //   ),
+                      //   child: Text("shrug_left"),
+                      //   onPressed: () {
+                      //     Navigator.push(
+                      //       context,
+                      //       new MaterialPageRoute(builder: (context) => new pose_view()),
+                      //     );
+                      //   },
+                      // ),
                       SizedBox(height: 10,),
                       ElevatedButton(
                         style: ElevatedButton.styleFrom(
@@ -59,9 +60,10 @@ class Home extends StatelessWidget {
                         ),
                         child: Text("shrug_right"),
                         onPressed: () {
+                          global.posenumber = 0;
                           Navigator.push(
                             context,
-                            new MaterialPageRoute(builder: (context) => new shrug_right()),
+                            new MaterialPageRoute(builder: (context) => new pose_view()),
                           );
                         },
                       ),
@@ -74,9 +76,10 @@ class Home extends StatelessWidget {
                         ),
                         child: Text("crutch_right"),
                         onPressed: () {
+                          global.posenumber = 3;
                           Navigator.push(
                             context,
-                            new MaterialPageRoute(builder: (context) => new crutch_right()),
+                            new MaterialPageRoute(builder: (context) => new pose_view()),
                           );
                         },
                       ),
@@ -89,9 +92,10 @@ class Home extends StatelessWidget {
                         ),
                         child: Text("hold_hands_right"),
                         onPressed: () {
+                          global.posenumber = 2;
                           Navigator.push(
                             context,
-                            new MaterialPageRoute(builder: (context) => new hold_hands_right()),
+                            new MaterialPageRoute(builder: (context) => new pose_view()),
                           );
                         },
                       ),
@@ -104,9 +108,10 @@ class Home extends StatelessWidget {
                         ),
                         child: Text("wipe_table_right"),
                         onPressed: () {
+                          global.posenumber = 2;
                           Navigator.push(
                             context,
-                            new MaterialPageRoute(builder: (context) => new wipe_table_right()),
+                            new MaterialPageRoute(builder: (context) => new pose_view()),
                           );
                         },
                       ),
@@ -119,9 +124,10 @@ class Home extends StatelessWidget {
                         ),
                         child: Text("bath_right"),
                         onPressed: () {
+                          global.posenumber = 5;
                           Navigator.push(
                             context,
-                            new MaterialPageRoute(builder: (context) => new bath_right()),
+                            new MaterialPageRoute(builder: (context) => new pose_view()),
                           );
                         },
                       ),
@@ -134,9 +140,10 @@ class Home extends StatelessWidget {
                         ),
                         child: Text("forward_shoulder_right"),
                         onPressed: () {
+                          global.posenumber = 6;
                           Navigator.push(
                             context,
-                            new MaterialPageRoute(builder: (context) => new forward_shoulder_right()),
+                            new MaterialPageRoute(builder: (context) => new pose_view()),
                           );
                         },
                       ),
@@ -149,9 +156,10 @@ class Home extends StatelessWidget {
                         ),
                         child: Text("forward_elbow_right"),
                         onPressed: () {
+                          global.posenumber = 7;
                           Navigator.push(
                             context,
-                            new MaterialPageRoute(builder: (context) => new forward_elbow_right()),
+                            new MaterialPageRoute(builder: (context) => new pose_view()),
                           );
                         },
                       ),
@@ -164,9 +172,10 @@ class Home extends StatelessWidget {
                         ),
                         child: Text("shoulder_raise_right"),
                         onPressed: () {
+                          global.posenumber = 8;
                           Navigator.push(
                             context,
-                            new MaterialPageRoute(builder: (context) => new shoulder_raise_right()),
+                            new MaterialPageRoute(builder: (context) => new pose_view()),
                           );
                         },
                       ),
@@ -179,9 +188,10 @@ class Home extends StatelessWidget {
                         ),
                         child: Text("heads_raise_right"),
                         onPressed: () {
+                          global.posenumber = 9;
                           Navigator.push(
                             context,
-                            new MaterialPageRoute(builder: (context) => new heads_raise_right()),
+                            new MaterialPageRoute(builder: (context) => new pose_view()),
                           );
                         },
                       ),
@@ -194,9 +204,10 @@ class Home extends StatelessWidget {
                         ),
                         child: Text("towel_right"),
                         onPressed: () {
+                          global.posenumber = 11;
                           Navigator.push(
                             context,
-                            new MaterialPageRoute(builder: (context) => new towel_right()),
+                            new MaterialPageRoute(builder: (context) => new pose_view()),
                           );
                         },
                       ),
@@ -209,9 +220,10 @@ class Home extends StatelessWidget {
                         ),
                         child: Text("thigh_stretch_right"),
                         onPressed: () {
+                          global.posenumber = 12;
                           Navigator.push(
                             context,
-                            new MaterialPageRoute(builder: (context) => new thigh_stretch_right()),
+                            new MaterialPageRoute(builder: (context) => new pose_view()),
                           );
                         },
                       ),
@@ -224,9 +236,10 @@ class Home extends StatelessWidget {
                         ),
                         child: Text("raise_feet_right"),
                         onPressed: () {
+                          global.posenumber = 13;
                           Navigator.push(
                             context,
-                            new MaterialPageRoute(builder: (context) => new raise_feet_right()),
+                            new MaterialPageRoute(builder: (context) => new pose_view()),
                           );
                         },
                       ),
@@ -239,9 +252,10 @@ class Home extends StatelessWidget {
                         ),
                         child: Text("thigh_abduction_right"),
                         onPressed: () {
+                          global.posenumber = 14;
                           Navigator.push(
                             context,
-                            new MaterialPageRoute(builder: (context) => new thigh_abduction_right()),
+                            new MaterialPageRoute(builder: (context) => new pose_view()),
                           );
                         },
                       ),
@@ -254,9 +268,10 @@ class Home extends StatelessWidget {
                         ),
                         child: Text("bent_knees_right"),
                         onPressed: () {
+                          global.posenumber = 15;
                           Navigator.push(
                             context,
-                            new MaterialPageRoute(builder: (context) => new bent_knees_right()),
+                            new MaterialPageRoute(builder: (context) => new pose_view()),
                           );
                         },
                       ),
@@ -269,9 +284,10 @@ class Home extends StatelessWidget {
                         ),
                         child: Text("calf_knees_right"),
                         onPressed: () {
+                          global.posenumber = 17;
                           Navigator.push(
                             context,
-                            new MaterialPageRoute(builder: (context) => new calf_knees_right()),
+                            new MaterialPageRoute(builder: (context) => new pose_view()),
                           );
                         },
                       ),
@@ -284,13 +300,14 @@ class Home extends StatelessWidget {
                         ),
                         child: Text("lift_feet_right"),
                         onPressed: () {
+                          global.posenumber = 18;
                           Navigator.push(
                             context,
-                            new MaterialPageRoute(builder: (context) => new lift_feet_right()),
+                            new MaterialPageRoute(builder: (context) => new pose_view()),
                           );
                         },
                       ),
-
+                      SizedBox(height: 10,),
                     ],
                   ),
             ),

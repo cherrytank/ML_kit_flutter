@@ -18,6 +18,7 @@ dependencies:
   path: ^1.8.2
   path_provider: ^2.0.11
   flutter_animate: ^4.1.0
+  auto_size_text: ^3.0.0
   google_mlkit_pose_detection:
     path: lib/vision_detector_views/mlkit_api_source/google_mlkit_pose_detection
 

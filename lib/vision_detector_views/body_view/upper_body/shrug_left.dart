@@ -1,241 +1,8 @@
-import 'package:flutter/material.dart';
 import 'dart:async';
-import 'package:google_mlkit_pose_detection/google_mlkit_pose_detection.dart';
-import 'package:flutter_animate/flutter_animate.dart';
 import 'dart:math';
 import '../assembly.dart';
 
-
-class shrug_left extends StatefulWidget {
-  @override
-  State<StatefulWidget> createState() => _PoseDetectorViewState();
-}
-
-class _PoseDetectorViewState extends State<shrug_left> {
-  final PoseDetector _poseDetector =
-      PoseDetector(options: PoseDetectorOptions());
-  bool _canProcess = true;
-  bool _isBusy = false;
-  CustomPaint? _customPaint;
-  String? _text;
-  Detector_shrug_left Det = new Detector_shrug_left();//建立偵測系統
-  @override
-  void dispose() async {
-    _canProcess = false;
-    _poseDetector.close();
-    Det.timerbool = false;//關閉timer
-    cameramode_front =false;//覆歸攝影機設定
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    if (Det.endDetector) {
-      //退回上一頁
-      print("back page");
-      Navigator.pop(context);
-    }
-    return Stack(
-      alignment: Alignment.center,
-      fit: StackFit.expand,
-      children: <Widget>[
-        CameraView(
-          //相機view
-          title: 'Pose',
-          customPaint: _customPaint,
-          text: _text,
-          onImage: (inputImage) {
-            processImage(inputImage);
-          },
-        ),
-        if(!Det.changeUI)... [
-          // Positioned(
-          //   //人形立牌
-          //   top: 120,
-          //   child:Image(
-          //     height: 0,
-          //     image: AssetImage("assets/picture/b.png"),)
-          //   ).animate().slide(duration: 500.ms),
-          Positioned(
-            //倒數計時
-              top: 180,
-              child:Container(
-                height: 120,
-                width: 100,
-                child: Text(
-                  "${Det.mathText}",
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    backgroundColor: Colors.transparent,
-                    fontSize: 100,
-                    color: Colors.amber,
-                    inherit: false,
-                  ),
-                ),
-              )
-          ),
-          Positioned(
-            //開始前提醒視窗
-            bottom: 100.0,
-            child: Container(
-              width: 1000,
-              padding: EdgeInsets.all(10),
-              alignment: Alignment.center,
-              decoration: new BoxDecoration(
-                color: Color.fromARGB(132, 255, 255, 255),
-                borderRadius: BorderRadius.all(Radius.circular(20.0)),
-              ),
-              child: Text(
-                "請將上半身拍攝於畫面內\n並維持鏡頭穩定\n準備完成請按「Start」",
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  backgroundColor: Colors.transparent,
-                  fontSize: 25,
-                  color: Colors.black,
-                  height: 1.2,
-                  inherit: false,
-                ),
-              ),
-            ),
-          ).animate().slide(duration: 500.ms),
-          if(Det.buttom_false)
-            Positioned(
-              //復健按鈕
-                bottom: 15.0,
-                child: Container(
-                  height: 80,
-                  child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(50)),
-                      ),
-                      padding: EdgeInsets.all(15),
-                      backgroundColor: Color.fromARGB(250, 255, 190, 52),
-                    ),
-                    child: Text("Start!",
-                        style: TextStyle(
-                          fontSize: 35,
-                          color: Colors.white,
-                        )),
-                    onPressed: () {
-                      Det.startd();
-                    },
-                  ),
-                )).animate().slide(duration: 500.ms),
-        ]else...[
-          Positioned(
-            //計數器UI
-            bottom: 10,
-            right: -10,
-            child: Container(
-              padding: EdgeInsets.all(10),
-              decoration: new BoxDecoration(
-                color: Color.fromARGB(250, 65, 64, 64),
-                borderRadius: BorderRadius.horizontal(
-                  left: Radius.circular(20),
-                  right: Radius.circular(0),
-                ),
-              ),
-              width: 100,
-              height: 90,
-              child: Text(
-                "次數\n${Det.posecounter}/${Det.poseTarget}",
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  fontSize: 25,
-                  color: Color.fromARGB(250, 255, 190, 52),
-                  height: 1.2,
-                  inherit: false,
-                ),
-              ),
-            ),
-          ),
-          Positioned(
-            //計時器UI
-            bottom: 10,
-            left: -10,
-            child: Container(
-              padding: EdgeInsets.all(10),
-              decoration: new BoxDecoration(
-                color: Color.fromARGB(250, 65, 64, 64),
-                borderRadius: BorderRadius.horizontal(
-                  left: Radius.circular(0),
-                  right: Radius.circular(20),
-                ),
-              ),
-              width: 100,
-              height: 90,
-              child: Text(
-                "秒數\n${Det.posetimecounter}/${Det.posetimeTarget}",
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  fontSize: 25,
-                  color: Color.fromARGB(250, 255, 190, 52),
-                  height: 1.2,
-                  inherit: false,
-                ),
-              ),
-            ),
-          ),
-          Positioned(//提醒視窗
-            bottom: 100,
-            child: Container(
-              padding: EdgeInsets.all(30),
-              decoration: new BoxDecoration(
-                color: Color.fromARGB(218, 255, 190, 52),
-                borderRadius: BorderRadius.horizontal(
-                  left: Radius.circular(30),
-                  right: Radius.circular(30),
-                ),
-              ),
-              width: 220,
-              height: 100,
-              child: Text(
-                "${Det.orderText}",
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  fontSize: 28,
-                  color: Colors.white,
-                  height: 1.2,
-                  inherit: false,
-                ),
-              ),
-            ),
-          )
-              .animate(
-              onPlay: (controller) => controller.repeat())
-              .scaleXY(end: 0.2,duration: 2.seconds),
-        ]
-      ],
-    );
-  }
-
-  Future<void> processImage(InputImage inputImage) async {
-    if (!_canProcess) return;
-    if (_isBusy) return;
-    _isBusy = true;
-    setState(() {
-      _text = '';
-    });
-    final poses = await _poseDetector.processImage(inputImage);
-    if (inputImage.inputImageData?.size != null &&
-        inputImage.inputImageData?.imageRotation != null) {
-      final painter = PosePainter(poses, inputImage.inputImageData!.size,
-          inputImage.inputImageData!.imageRotation);
-      _customPaint = CustomPaint(painter: painter);
-    } else {
-      _text = 'Poses found: ${poses.length}\n\n';
-      // TODO: set _customPaint to draw landmarks on top of image
-      _customPaint = null;
-    }
-    _isBusy = false;
-    if (mounted) {
-      setState(() {});
-    }
-  }
-}
-
-class Detector_shrug_left {
+class Detector_shrug_left implements Detector_default {
   int posetimecounter = 0; //復健動作持續秒數
   int posetimeTarget = 5; //復健動作持續秒數目標
   int posecounter = 0; //復健動作實作次數
@@ -252,6 +19,7 @@ class Detector_shrug_left {
   String mathText = "";//倒數文字
   bool buttom_false = true;//按下按鈕消失
   bool changeUI = false;
+  bool right_side= true; //右邊開始
 
   void startd(){//倒數計時
       int counter = 5;
@@ -335,6 +103,17 @@ class Detector_shrug_left {
 
   double distance(double x1,double y1,double x2,double y2){
     return sqrt(pow((x1-x2).abs(),2)+pow((y1-y2).abs(),2));
+  }
+
+  double angle(double x1,double y1,double x2,double y2,double x3,double y3){
+    double vx1= x1-x2;
+    double vy1= y1-y2;
+    double vx2= x3-x2;
+    double vy2= y3-y2;
+    double porduct = vx1*vx2+vy1*vy2;
+    double result = acos(porduct/(distance(x1, y1, x2, y2)*distance(x3, y3, x2, y2)))*57.3;
+    print(result);
+    return result;
   }
 
   void settimer(){
