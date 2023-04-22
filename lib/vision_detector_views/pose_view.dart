@@ -53,13 +53,6 @@ class _PoseDetectorViewState extends State<pose_view> {
           },
         ),
         if(!global.Det.changeUI)... [
-          // Positioned(
-          //   //人形立牌
-          //     top: 120,
-          //     child: Image(
-          //       height: 0,
-          //       image: AssetImage("assets/picture/b.png"),)
-          // ).animate().slide(duration: 500.ms),
           Positioned(
             //倒數計時
               top: 180,

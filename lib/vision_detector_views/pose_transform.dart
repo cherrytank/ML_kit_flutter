@@ -6,6 +6,7 @@ class global{
       static late Detector_default Det;
       static void pose_tranform(){
           switch(global.posenumber){
+            //upper_body_right
             case 0:
               global.Det = Detector_shrug_right();
               break;
@@ -24,6 +25,7 @@ class global{
             case 5:
               global.Det = Detector_bath_right();
               break;
+            //upper_body_Advanced_right
             case 6:
               global.Det = Detector_forward_shoulder_right();
               break;
@@ -42,6 +44,7 @@ class global{
             case 11:
               global.Det = Detector_towel_right();
               break;
+            //lower_body_right
             case 12:
               global.Det = Detector_thigh_stretch_right();
               break;
@@ -60,24 +63,25 @@ class global{
             case 17:
               global.Det = Detector_calf_knees_right();
               break;
+            //lower_body_Advanced_right
             case 18:
               global.Det = Detector_lift_feet_right();
               break;
-            // case 19:
-            //   global.Det = ;
-            //   break;
-            // case 20:
-            //   global.Det = ;
-            //   break;
-            // case 21:
-            //   global.Det = ;
-            //   break;
+            case 19:
+              global.Det = Detector_stand_up_right();
+              break;
+            case 20:
+              global.Det = Detector_standing_action_right();
+              break;
+            case 21:
+              global.Det = Detector_standing_knee_bent_right();
+              break;
             // case 22:
             //   global.Det = ;
             //   break;
-            // case 23:
-            //   global.Det = ;
-            //   break;
+            case 23:
+              global.Det = Detector_sitting_balance_right();
+              break;
           }
       }
 }

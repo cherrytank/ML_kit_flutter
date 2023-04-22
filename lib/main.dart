@@ -58,7 +58,7 @@ class Home extends StatelessWidget {
                             padding: EdgeInsets.all(10.0),
                             textStyle: const TextStyle(fontSize: 30)
                         ),
-                        child: Text("shrug_right"),
+                        child: Text("聳肩"),
                         onPressed: () {
                           global.posenumber = 0;
                           Navigator.push(
@@ -74,7 +74,7 @@ class Home extends StatelessWidget {
                             padding: EdgeInsets.all(10.0),
                             textStyle: const TextStyle(fontSize: 30)
                         ),
-                        child: Text("crutch_right"),
+                        child: Text("拐杖撐手"),
                         onPressed: () {
                           global.posenumber = 3;
                           Navigator.push(
@@ -90,7 +90,23 @@ class Home extends StatelessWidget {
                             padding: EdgeInsets.all(10.0),
                             textStyle: const TextStyle(fontSize: 30)
                         ),
-                        child: Text("hold_hands_right"),
+                        child: Text("撐手"),
+                        onPressed: () {
+                          global.posenumber = 1;
+                          Navigator.push(
+                            context,
+                            new MaterialPageRoute(builder: (context) => new pose_view()),
+                          );
+                        },
+                      ),
+                      SizedBox(height: 10,),
+                      ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                            minimumSize: Size(350,50),
+                            padding: EdgeInsets.all(10.0),
+                            textStyle: const TextStyle(fontSize: 30)
+                        ),
+                        child: Text("擦桌動作"),
                         onPressed: () {
                           global.posenumber = 2;
                           Navigator.push(
@@ -106,23 +122,7 @@ class Home extends StatelessWidget {
                             padding: EdgeInsets.all(10.0),
                             textStyle: const TextStyle(fontSize: 30)
                         ),
-                        child: Text("wipe_table_right"),
-                        onPressed: () {
-                          global.posenumber = 2;
-                          Navigator.push(
-                            context,
-                            new MaterialPageRoute(builder: (context) => new pose_view()),
-                          );
-                        },
-                      ),
-                      SizedBox(height: 10,),
-                      ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                            minimumSize: Size(350,50),
-                            padding: EdgeInsets.all(10.0),
-                            textStyle: const TextStyle(fontSize: 30)
-                        ),
-                        child: Text("bath_right"),
+                        child: Text("擦澡動作"),
                         onPressed: () {
                           global.posenumber = 5;
                           Navigator.push(
@@ -138,7 +138,7 @@ class Home extends StatelessWidget {
                             padding: EdgeInsets.all(10.0),
                             textStyle: const TextStyle(fontSize: 30)
                         ),
-                        child: Text("forward_shoulder_right"),
+                        child: Text("肩膀前舉"),
                         onPressed: () {
                           global.posenumber = 6;
                           Navigator.push(
@@ -154,7 +154,7 @@ class Home extends StatelessWidget {
                             padding: EdgeInsets.all(10.0),
                             textStyle: const TextStyle(fontSize: 30)
                         ),
-                        child: Text("forward_elbow_right"),
+                        child: Text("手肘前伸"),
                         onPressed: () {
                           global.posenumber = 7;
                           Navigator.push(
@@ -170,7 +170,7 @@ class Home extends StatelessWidget {
                             padding: EdgeInsets.all(10.0),
                             textStyle: const TextStyle(fontSize: 30)
                         ),
-                        child: Text("shoulder_raise_right"),
+                        child: Text("肩膀側舉"),
                         onPressed: () {
                           global.posenumber = 8;
                           Navigator.push(
@@ -186,7 +186,7 @@ class Home extends StatelessWidget {
                             padding: EdgeInsets.all(10.0),
                             textStyle: const TextStyle(fontSize: 30)
                         ),
-                        child: Text("heads_raise_right"),
+                        child: Text("雙手抬舉"),
                         onPressed: () {
                           global.posenumber = 9;
                           Navigator.push(
@@ -202,7 +202,7 @@ class Home extends StatelessWidget {
                             padding: EdgeInsets.all(10.0),
                             textStyle: const TextStyle(fontSize: 30)
                         ),
-                        child: Text("towel_right"),
+                        child: Text("擦毛巾"),
                         onPressed: () {
                           global.posenumber = 11;
                           Navigator.push(
@@ -218,7 +218,7 @@ class Home extends StatelessWidget {
                             padding: EdgeInsets.all(10.0),
                             textStyle: const TextStyle(fontSize: 30)
                         ),
-                        child: Text("thigh_stretch_right"),
+                        child: Text("大腿伸彎"),
                         onPressed: () {
                           global.posenumber = 12;
                           Navigator.push(
@@ -234,7 +234,7 @@ class Home extends StatelessWidget {
                             padding: EdgeInsets.all(10.0),
                             textStyle: const TextStyle(fontSize: 30)
                         ),
-                        child: Text("raise_feet_right"),
+                        child: Text("躺姿抬腳"),
                         onPressed: () {
                           global.posenumber = 13;
                           Navigator.push(
@@ -250,7 +250,7 @@ class Home extends StatelessWidget {
                             padding: EdgeInsets.all(10.0),
                             textStyle: const TextStyle(fontSize: 30)
                         ),
-                        child: Text("thigh_abduction_right"),
+                        child: Text("大腿外展"),
                         onPressed: () {
                           global.posenumber = 14;
                           Navigator.push(
@@ -266,7 +266,7 @@ class Home extends StatelessWidget {
                             padding: EdgeInsets.all(10.0),
                             textStyle: const TextStyle(fontSize: 30)
                         ),
-                        child: Text("bent_knees_right"),
+                        child: Text("膝蓋彎曲"),
                         onPressed: () {
                           global.posenumber = 15;
                           Navigator.push(
@@ -282,7 +282,7 @@ class Home extends StatelessWidget {
                             padding: EdgeInsets.all(10.0),
                             textStyle: const TextStyle(fontSize: 30)
                         ),
-                        child: Text("calf_knees_right"),
+                        child: Text("小腿前踢"),
                         onPressed: () {
                           global.posenumber = 17;
                           Navigator.push(
@@ -298,7 +298,7 @@ class Home extends StatelessWidget {
                             padding: EdgeInsets.all(10.0),
                             textStyle: const TextStyle(fontSize: 30)
                         ),
-                        child: Text("lift_feet_right"),
+                        child: Text("側抬腳式"),
                         onPressed: () {
                           global.posenumber = 18;
                           Navigator.push(
@@ -308,6 +308,69 @@ class Home extends StatelessWidget {
                         },
                       ),
                       SizedBox(height: 10,),
+                      ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                            minimumSize: Size(350,50),
+                            padding: EdgeInsets.all(10.0),
+                            textStyle: const TextStyle(fontSize: 30)
+                        ),
+                        child: Text("跨步動作"),
+                        onPressed: () {
+                          global.posenumber = 19;
+                          Navigator.push(
+                            context,
+                            new MaterialPageRoute(builder: (context) => new pose_view()),
+                          );
+                        },
+                      ),
+                      SizedBox(height: 10,),
+                      ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                            minimumSize: Size(350,50),
+                            padding: EdgeInsets.all(10.0),
+                            textStyle: const TextStyle(fontSize: 30)
+                        ),
+                        child: Text("站姿膝彎曲"),
+                        onPressed: () {
+                          global.posenumber = 20;
+                          Navigator.push(
+                            context,
+                            new MaterialPageRoute(builder: (context) => new pose_view()),
+                          );
+                        },
+                      ),
+                      SizedBox(height: 10,),
+                      ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                            minimumSize: Size(350,50),
+                            padding: EdgeInsets.all(10.0),
+                            textStyle: const TextStyle(fontSize: 30)
+                        ),
+                        child: Text("坐姿動態"),
+                        onPressed: () {
+                          global.posenumber = 21;
+                          Navigator.push(
+                            context,
+                            new MaterialPageRoute(builder: (context) => new pose_view()),
+                          );
+                        },
+                      ),
+                      SizedBox(height: 10,),
+                      ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                            minimumSize: Size(350,50),
+                            padding: EdgeInsets.all(10.0),
+                            textStyle: const TextStyle(fontSize: 30)
+                        ),
+                        child: Text("坐姿平衡"),
+                        onPressed: () {
+                          global.posenumber = 23;
+                          Navigator.push(
+                            context,
+                            new MaterialPageRoute(builder: (context) => new pose_view()),
+                          );
+                        },
+                      ),
                     ],
                   ),
             ),

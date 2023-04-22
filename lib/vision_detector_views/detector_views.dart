@@ -15,6 +15,10 @@ export 'body_view/lower_body/thigh_abduction_right.dart';
 export 'body_view/lower_body/bent_knees_right.dart';
 export 'body_view/lower_body/calf_knees_right.dart';
 export 'body_view/lower_body_Advanced/lift_feet_right.dart';
+export 'body_view/lower_body_Advanced/stand_up_right.dart';
+export 'body_view/lower_body_Advanced/standing_action_right.dart';
+export 'body_view/lower_body_Advanced/standing_knee_bent_right.dart';
+export 'body_view/lower_body_Advanced/sitting_balance_right.dart';
 
 /*
 動作中英對照表(_right ,_left )
