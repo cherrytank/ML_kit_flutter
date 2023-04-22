@@ -90,7 +90,7 @@ class _PoseDetectorViewState extends State<pose_view> {
                 borderRadius: BorderRadius.all(Radius.circular(20.0)),
               ),
               child: Text(
-                "請將上半身拍攝於畫面內\n並維持鏡頭穩定\n準備完成請按「Start」",
+                global.Det.mindText,
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   backgroundColor: Colors.transparent,
@@ -154,6 +154,7 @@ class _PoseDetectorViewState extends State<pose_view> {
               ),
             ),
           ),
+          if(global.Det.timerui)
           Positioned(
             //計時器UI
             bottom: 10,

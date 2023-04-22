@@ -16,6 +16,8 @@ abstract class Detector_default {
   late bool right_side; //右邊開始
   late bool buttom_false;//按下按鈕消失
   late bool changeUI;
+  late bool timerui;
+  late String mindText;
 
   void startd(){}
 

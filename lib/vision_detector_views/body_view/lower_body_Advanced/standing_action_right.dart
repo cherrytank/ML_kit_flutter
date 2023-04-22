@@ -2,11 +2,12 @@ import 'dart:async';
 import 'dart:math';
 import '../assembly.dart';
 
-class Detector_shoulder_raise_right implements Detector_default{
+
+class Detector_standing_action_right implements Detector_default{
   int posetimecounter = 0; //復健動作持續秒數
-  int posetimeTarget = 10; //復健動作持續秒數目標
+  int posetimeTarget = 3; //復健動作持續秒數目標
   int posecounter = 0; //復健動作實作次數
-  int poseTarget = 10; //目標次數設定
+  int poseTarget = 15; //目標次數設定
   bool startdDetector = false; //偵測
   bool endDetector = false; //跳轉
   bool DetectorED = false;
@@ -47,14 +48,13 @@ class Detector_shoulder_raise_right implements Detector_default{
     print("startdDetector be true");
     setStandpoint();
     settimer();
-
   }
 
   void poseDetector() {
     //偵測判定
     if (this.startdDetector) {
       DetectorED = true;
-      this.orderText = "請側舉右臂";
+      this.orderText = "請側抬右腳";
       if (this.posetimecounter == this.posetimeTarget) {
         //秒數達成
         this.startdDetector = false;
@@ -62,13 +62,7 @@ class Detector_shoulder_raise_right implements Detector_default{
         this.posetimecounter = 0;
         this.orderText = "達標!";
       }
-      if(angle(posedata[24]!,posedata[25]!,posedata[28]!,posedata[29]!,posedata[32]!,posedata[33]!)<130){
-        this.orderText = "手請伸直";
-        return;
-      }
-      if (angle(posedata[24]!,posedata[25]!,posedata[28]!,posedata[29]!,posedata[32]!,posedata[33]!)>130//手臂角度需大於
-          && distance(posedata[32]!, posedata[33]!, posedata[24]!, posedata[25]!)>200
-          && posedata[33]!<(posedata[25]!+100)//手部須高於臀部
+      if (distance(posedata[54]!, posedata[55]!, posedata[56]!, posedata[57]!)>200 //腳踝距離
         &&this.startdDetector) {
         //每秒目標
         this.posetimecounter++;
@@ -80,21 +74,23 @@ class Detector_shoulder_raise_right implements Detector_default{
       }
     } else if (DetectorED) {
       //預防空值被訪問
-      if (posedata[33]!>(posedata[25]!+100)) {
+      if (
+      distance(posedata[54]!, posedata[55]!, posedata[56]!, posedata[57]!)<100 //腳踝距離
+      ) {
         //確認復歸
         this.startdDetector = true;
       } else {
-        this.orderText = "請放下手臂";
+        this.orderText = "請放下腳";
       }
     }
   }
 
   void setStandpoint() {
     //設定基準點(左上角為(0,0)向右下)
-    this.Standpoint_X = posedata[22]! - 20;
-    this.Standpoint_Y = posedata[23]! - 20;
-    this.Standpoint_bodymind_x = (posedata[22]!+posedata[24]!)/2;
-    this.Standpoint_bodymind_y = (posedata[23]!+posedata[25]!)/2;
+    // this.Standpoint_X = posedata[22]! - 20;
+    // this.Standpoint_Y = posedata[23]! - 20;
+    // this.Standpoint_bodymind_x = (posedata[22]!+posedata[24]!)/2;
+    // this.Standpoint_bodymind_y = (posedata[23]!+posedata[25]!)/2;
   }
 
   void posetargetdone() {

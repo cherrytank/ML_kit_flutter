@@ -20,6 +20,8 @@ class Detector_raise_feet_right implements Detector_default{
   bool buttom_false = true;//按下按鈕消失
   bool changeUI = false;
   bool right_side = true;
+  bool timerui = true;
+  String mindText = "請將全身拍攝於畫面內\n並維持鏡頭穩定\n準備完成請按「Start」";
 
   void startd(){//倒數計時
       int counter = 5;

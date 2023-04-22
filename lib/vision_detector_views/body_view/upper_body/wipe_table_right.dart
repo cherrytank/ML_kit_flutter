@@ -20,6 +20,9 @@ class Detector_wipe_table_right implements Detector_default{
   bool right_side= true; //右邊開始
   bool buttom_false = true;//按下按鈕消失
   bool changeUI = false;
+  bool timerui = false;
+  String mindText = "請將上半身拍攝於畫面內\n並維持鏡頭穩定\n準備完成請按「Start」";
+
   void startd(){//倒數計時
       this.buttom_false = false;
       int counter = 5;
