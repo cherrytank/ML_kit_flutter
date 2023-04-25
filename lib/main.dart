@@ -314,7 +314,7 @@ class Home extends StatelessWidget {
                             padding: EdgeInsets.all(10.0),
                             textStyle: const TextStyle(fontSize: 30)
                         ),
-                        child: Text("跨步動作"),
+                        child: Text("站姿抬腳"),
                         onPressed: () {
                           global.posenumber = 19;
                           Navigator.push(
@@ -330,7 +330,7 @@ class Home extends StatelessWidget {
                             padding: EdgeInsets.all(10.0),
                             textStyle: const TextStyle(fontSize: 30)
                         ),
-                        child: Text("站姿膝彎曲"),
+                        child: Text("跨步動作"),
                         onPressed: () {
                           global.posenumber = 20;
                           Navigator.push(
@@ -346,7 +346,7 @@ class Home extends StatelessWidget {
                             padding: EdgeInsets.all(10.0),
                             textStyle: const TextStyle(fontSize: 30)
                         ),
-                        child: Text("坐姿動態"),
+                        child: Text("站姿膝彎曲"),
                         onPressed: () {
                           global.posenumber = 21;
                           Navigator.push(
